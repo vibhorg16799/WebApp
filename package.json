@@ -1,0 +1,27 @@
+{
+  "name": "rfid",
+  "version": "1.0.0",
+  "description": "RFID web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "start": "node server/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.5",
+    "dependencies": "0.0.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "8.5.1",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.6.5",
+    "node": "^12.7.0",
+    "nodemon": "^1.19.1",
+    "sequelize": "^5.9.0"
+  },
+  "devDependencies": {}
+}
