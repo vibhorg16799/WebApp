@@ -1,15 +1,9 @@
+// This file defines the scan table from our database 
+
 const Sequelize = require("sequelize"); //imports sequelize
 const db = require("../database/db.js"); // imports DB file that points to rfid db 
 
-
-/*Forces sequilize to use the name defined in each model definition instead of plural version of model name. 
-var opts = {
-    define: {
-        //prevent sequelize from pluralizing table names
-        freezeTableName: true
-    }
-}*/
-
+// creates sequelize model for scan
 module.exports = db.sequelize.define(
     "scan", {
         scanID: {
@@ -25,8 +19,7 @@ module.exports = db.sequelize.define(
         }
     },
     {
-        freezeTableName: true,
-        timestamps: false
+        freezeTableName: true, // forces table name to remain as defined 
+        timestamps: false // does not record timestamps automatically 
     }
 )
-

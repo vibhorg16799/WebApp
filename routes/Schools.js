@@ -1,17 +1,23 @@
-const express = require("express");
-const schools = express.Router();
-const cors = require('cors');
-const jwt = require(`jsonwebtoken`);
-const bcrypt = require('bcryptjs');
+// This file handles all routes associated with the School model 
 
-const School = require("../models/School");
+const express = require("express"); // imports express
+const schools = express.Router(); // sets schools to express router 
+const cors = require('cors'); // imports cors 
+const jwt = require(`jsonwebtoken`); // imports jwt 
+const bcrypt = require('bcryptjs'); // import bcrypt 
+
+const School = require("../models/School"); // imports school model 
 const User = require("../models/User");
-schools.use(cors());
+schools.use(cors()); // sets express router to use cors 
 
-process.env.SECRET_KEY = 'secret';
+process.env.SECRET_KEY = 'secret'; // jwt secret key 
 
-//School.belongsTo(User, {foreignKey: 'userID'});
 
+// Precondition: frontend code posts to schools/resgister:
+// userID: int 
+// name: varchar 
+// phoneNumber: varchar
+// Postcondition: new record is created in school table
 schools.post('/register', (req, res) => {
     const userData = {
         //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
@@ -20,18 +26,18 @@ schools.post('/register', (req, res) => {
         phoneNumber: req.body.phoneNumber
     }
 
-    //Queries User table in RFID db to find all users in table 
+    // Queries school table in RFID db to find school where userID = userID sent 
    School.findOne({
         where: {
             userID: req.body.userID
         }
     })
-    //If user doesnt exist user is put into User table, if user does exist you are prompted with error "user already exists"
+    // If school doesnt exist school is put into school table, if school does exist you are prompted with error "school already exists"
     .then(school =>{
         if(!school) {
          //   bcrypt.hash(req.body.phoneNumber, 10, (err, hash) => {
          //   userData.phoneNumber = hash
-            School.create(userData)
+            School.create(userData) // creates new school record
             .then(school => {
                 res.json({status: school.name + ' registered'})
             })
@@ -40,19 +46,22 @@ schools.post('/register', (req, res) => {
             })
         
      } else {
-         res.json({error: "School already exists"})
+         res.json({error: "School already exists"}) // school exists 
      }
 
   })
   .catch(err => {
-      res.send('error: ' + err)
+      res.send('error: ' + err) // error handling 
   })
 })
 
+// Precondition: frontend code posts to schools/login w/ paremeters found in where clause:
+// userID: int
+// Postcondition: record is returned in jwt form 
 schools.post('/login', (req, res) => {
     School.findOne({
         where: {
-            userID: req.body.userID
+            userID: req.body.userID // log in parameters 
         }
     })
     .then(school => {
@@ -61,14 +70,14 @@ schools.post('/login', (req, res) => {
                 let token = jwt.sign(school.dataValues, process.env.SECRET_KEY, {
                     expiresIn: 1440
                 })
-                res.send(token)
+                res.send(token) // record in jwt form 
             
         }else{
-            res.status(400).json({error: 'School does not exist'})
+            res.status(400).json({error: 'School does not exist'}) // record does not exist 
         }
     })
     .catch(err => {
-        res.status(400).json({error: err})
+        res.status(400).json({error: err}) // error hanlding 
     })
 })
 

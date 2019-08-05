@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import {registerStudent} from './UserFunctions'
+// This file contains the view and functionality for the School Register page 
+
+import React, { Component } from 'react'; // imports react 
+import {registerStudent} from './UserFunctions' // imports registerNurse function
 
 
 
@@ -7,7 +9,7 @@ import {registerStudent} from './UserFunctions'
 class StudentRegister extends Component {
     constructor(){
         super()
-        this.state = {
+        this.state = { // state of StudentRegister component
             userID: '',
             pediatricianID: '',
             firstName: '',
@@ -16,21 +18,23 @@ class StudentRegister extends Component {
 
         }
 
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onChange = this.onChange.bind(this) // calls onChange for focus change 
+        this.onSubmit = this.onSubmit.bind(this) // calls OnSubmit when submit button is clicked 
     }
 
-
+    // Precondition: focus is changed from one field to another 
+    // Postcondition: Value input in field is set to state of field  
     onChange(e){
         this.setState({[e.target.name]: e.target.value})
     }
 
-
+    // Precondition: submit button is clicked
+    // Postcondition: newNurse object is created based on values in state of Register object and sent to regsiter function
     onSubmit(e){
         e.preventDefault()
 
         
-        
+        //newStudent object that holds data needed to register student
         const newStudent = {
             userID: this.state.userID,
             pediatricianID: this.state.pediatricianID,
@@ -39,7 +43,7 @@ class StudentRegister extends Component {
             school: this.state.school,
  
         }
-
+        // Sends newStudent object to registerStudent method, then push's user to studentregister2 page
         registerStudent(newStudent).then(res => {
                 this.props.history.push(`/studentregister2`)
                 
@@ -113,7 +117,7 @@ class StudentRegister extends Component {
                             className="btn btn-lg btn-primary btn-block"
                             >
                                 Continue
-                            </button>
+                            </button>                       {/* Submit Button */}
                         </form>
                     </div>
 

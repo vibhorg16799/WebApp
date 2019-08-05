@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import {register} from './UserFunctions'
+// This file contains the view and functionality for the Register page 
+
+import React, { Component } from 'react'; // imports react 
+import {register} from './UserFunctions' // imports register function from userfunctions
 import {registerStudent} from './UserFunctions'
 import {registerSchool} from './UserFunctions'
 
@@ -9,7 +11,7 @@ import {registerSchool} from './UserFunctions'
 class Register extends Component {
     constructor(){
         super()
-        this.state = {
+        this.state = { // state of register compenent 
             email: '',
             password: '',
             address: '',
@@ -17,19 +19,24 @@ class Register extends Component {
             userType: '', 
         }
 
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onChange = this.onChange.bind(this) // calls onChange() when focus is changed from one field to another
+        this.onSubmit = this.onSubmit.bind(this) // calls OnSubmit() when submit button is clicked 
     }
 
 
+    // Precondition: focus is changed from one field to another 
+    // Postcondition: Value input in field is set to state of field  
     onChange(e){
         this.setState({[e.target.name]: e.target.value})
     }
 
 
+    // Precondition: submit button is clicked
+    // Postcondition: newUser object is created based on values in state of Register object and sent to regsiter function
     onSubmit(e){
         e.preventDefault()
 
+        //newUser object that holds data needed to register newUser
         const newUser = {
             email: this.state.email,
             password: this.state.password,
@@ -38,7 +45,9 @@ class Register extends Component {
             userType: this.state.userType,
         }
 
+        // Sends newUser object to register method 
         register(newUser).then(res => {
+
            //     Push's user to respective form for school or student to continue signing up account
                 if(this.state.userType === 'school')
                 {
@@ -76,7 +85,7 @@ class Register extends Component {
                         <form noValidate onSubmit={this.onSubmit}>
                             <h1 className="h3 mb-3 font-weight-normal"> </h1>
                             <div className="form-group">
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email">Email</label> 
                                 <input type="email"
                                  className="form-control"
                                 name="email"
@@ -86,7 +95,7 @@ class Register extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="password">Password</label>
+                                <label htmlFor="password">Password</label> 
                                 <input type="password"
                                  className="form-control"
                                 name="password"
@@ -96,7 +105,7 @@ class Register extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="address">Address</label>
+                                <label htmlFor="address">Address</label> 
                                 <input type="text"
                                  className="form-control"
                                 name="address"
@@ -106,7 +115,7 @@ class Register extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="profilePhoto">Profile Photo</label>
+                                <label htmlFor="profilePhoto">Profile Photo</label> 
                                 <br></br>
                                 <input type="file"
                                  className="browse-button"
@@ -117,18 +126,18 @@ class Register extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="userType">User Type</label>
+                                <label htmlFor="userType">User Type</label> 
 
                                 <br></br>
                                 
-                                <label>
+                                <label> 
                                     <input type="radio"
                                     name="userType"
                                     value="student"
-                                    checked={this.state.userType === "student"}
+                                    checked={this.state.userType === "student"} 
                                     onChange={this.onChange}/>
                                     student 
-                                </label>
+                                </label>                                    
 
                                 <br></br>
                             
@@ -139,14 +148,14 @@ class Register extends Component {
                                     checked={this.state.userType === "school"}
                                     onChange={this.onChange}/>
                                     school 
-                                </label>
+                                </label>                                    
                             </div>
 
                             <button type="submit"
                             className="btn btn-lg btn-primary btn-block"
                             >
                                 Continue
-                            </button>
+                            </button>                                       {/* Submit Button */}
                         </form>
                     </div>
 

@@ -1,14 +1,10 @@
+// This file defines the school table from our database 
+
 const Sequelize = require("sequelize"); //imports sequelize
 const db = require("../database/db.js"); // imports DB file that points to rfid db 
-const user = require('./User')
-/*Forces sequilize to use the name defined in each model definition instead of plural version of model name. 
-var opts = {
-    define: {
-        //prevent sequelize from pluralizing table names
-        freezeTableName: true
-    }
-}*/
+const user = require('./User') // imports user model for fk relationship
 
+// creates sequelize model for school
 module.exports = db.sequelize.define(
     "school", {
         //Foreign key from user.userID field, all school's are users. Therefore, they recieve their ID's from user's table
@@ -30,9 +26,8 @@ module.exports = db.sequelize.define(
         }
     },
     {
-        freezeTableName: true,
-        timestamps: false
+        freezeTableName: true, // forces table name to remain as defined 
+        timestamps: false // does not record timestamps automatically 
     },
 )
 
-//db.school.belongsTo(db.user, {foreignKey: 'userID'});

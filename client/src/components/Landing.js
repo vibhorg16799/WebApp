@@ -1,4 +1,6 @@
-import React, {Component} from 'react'
+// This file contains the view and functionality for the Landing page 
+
+import React, {Component} from 'react' // imports react
 
 
 
@@ -8,14 +10,14 @@ class Landing extends Component {
             <div className="container">
                  <div style={listContainer} className="jumbotron mt-5">
                     <div className="col-sm-8 mx-auto">
-                    <h1 style={title}className="text-center">Welcome to TrackerGen</h1>
+                    <h1 style={title}className="text-center">Welcome to TrackerGen</h1> 
                 </div>
             </div>
 
                 <div >
-                    <h2 className="text-center">We Track Your Student's:</h2>
-                    <div align="center">
-                    <ul style={listStyle}>
+                    <h2 className="text-center">We Track Your Student's:</h2> {/* List Heading  */}
+                    <div align="center"> 
+                    <ul style={listStyle}>  {/* List */}
                         <li>Allergies</li>
                         <li>Diseases</li>
                         <li>Medical Conditions</li>
@@ -26,7 +28,7 @@ class Landing extends Component {
                     <br></br>
                     <div style={listContainer} align="center">
                     <br></br>
-                    <h3 style={blueText}className="text-center">So You Don't Have To</h3>
+                    <h3 style={blueText}className="text-center">So You Don't Have To</h3> 
                     <br></br>
                     </div>
                     <br></br>

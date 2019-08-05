@@ -1,22 +1,17 @@
+// This file defines the pediatrician table from our database 
+
 const Sequelize = require("sequelize"); //imports sequelize
 const db = require("../database/db.js"); // imports DB file that points to rfid db 
-const student = require("../models/Student")
+const student = require("../models/Student") // imports student model for fk relationship
 
-/*Forces sequilize to use the name defined in each model definition instead of plural version of model name. 
-var opts = {
-    define: {
-        //prevent sequelize from pluralizing table names
-        freezeTableName: true
-    }
-}*/
-
+// creates sequelize model for pediatrician
 module.exports = db.sequelize.define(
     "pediatrician", {
         pediatricianID: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-           // defaultValue: Sequelize.NOW
+           
         },
         userID: {
             type: Sequelize.INTEGER,
@@ -29,16 +24,16 @@ module.exports = db.sequelize.define(
         },
         name: {
             type: Sequelize.STRING,
-           // defaultValue: Sequelize.NOW
+           
         },
         phoneNumber: {
             type: Sequelize.STRING,
-           // defaultValue: 'jmast'
+           
         },
     },
     {
-        freezeTableName: true,
-        timestamps: false
+        freezeTableName: true, // forces table name to remain as defined 
+        timestamps: false  // does not record timestamps automatically 
     }
 )
 

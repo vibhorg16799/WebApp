@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import {registerSchool} from './UserFunctions'
+// This file contains the view and functionality for the SchoolRegister page 
+
+import React, { Component } from 'react'; // imports react 
+import {registerSchool} from './UserFunctions' // imports register school function 
 
 
 
@@ -7,26 +9,30 @@ import {registerSchool} from './UserFunctions'
 class SchoolRegister extends Component {
     constructor(){
         super()
-        this.state = {
+        this.state = { // state of SchoolRegister component 
             userID: '',
             name: '',
             phoneNumber: '',
 
         }
 
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onChange = this.onChange.bind(this) // calls onChange for focus change 
+        this.onSubmit = this.onSubmit.bind(this) // calls OnSubmit when submit button is clicked 
     }
 
 
+    // Precondition: focus is changed from one field to another 
+    // Postcondition: Value input in field is set to state of field  
     onChange(e){
         this.setState({[e.target.name]: e.target.value})
     }
 
-
+    // Precondition: submit button is clicked
+    // Postcondition: newSchool object is created based on values in state of Register object and sent to regsiter function
     onSubmit(e){
         e.preventDefault()
 
+        //newSchool object that holds data needed to register newUser
         const newSchool = {
             userID: this.state.userID,
             name: this.state.name,
@@ -35,6 +41,7 @@ class SchoolRegister extends Component {
             
         }
 
+         // Sends newSchool object to registerSchool method, then push's user to schoolregister2 page
         registerSchool(newSchool).then(res => {
                 this.props.history.push(`/schoolregister2`)
         })
@@ -48,7 +55,7 @@ class SchoolRegister extends Component {
                         <form noValidate onSubmit={this.onSubmit}>
                             <h1 className="h3 mb-3 font-weight-normal"> </h1>
                             <div className="form-group">
-                                <label htmlFor="userID">User ID</label>
+                                <label htmlFor="userID">User ID</label>  
                                 <input type="number"
                                  className="form-control"
                                 name="userID"
@@ -58,7 +65,7 @@ class SchoolRegister extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="name">School</label>
+                                <label htmlFor="name">School</label> 
                                 <input type="text"
                                  className="form-control"
                                 name="name"
@@ -68,7 +75,7 @@ class SchoolRegister extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="phoneNumber">Phone Number</label>
+                                <label htmlFor="phoneNumber">Phone Number</label> 
                                 <input type="text"
                                  className="form-control"
                                 name="phoneNumber"
@@ -81,7 +88,7 @@ class SchoolRegister extends Component {
                             className="btn btn-lg btn-primary btn-block"
                             >
                                 Continue
-                            </button>
+                            </button>                                          {/* Submit Button */}
                         </form>
                     </div>
 

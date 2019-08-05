@@ -1,9 +1,16 @@
-import axios from 'axios';
+// This file contains all functions called by our site views 
+
+import axios from 'axios'; // imports axios, our http client
 
 
 
 
-//New base class user function
+//Precondition: newUser object is sent containing: 
+// email: varchar
+// password: varchar
+// address: varchar
+// profilePhoto: varchar
+//Postconidition: newUser object is sent to /users/register route, which registers a new user in our db 
 export const register = newUser => {
  //   if(newUser.userType === 'student')
     return axios 
@@ -36,7 +43,13 @@ export const register = newUser => {
     }) */
 }
 
-//Student Sign Up Function
+//Precondition: newStudent object is sent containing: 
+// userID: int
+// pediatricianID: int
+// firstName: varchar
+// lastName: varchar
+// school: varchar
+//Postconidition: newStudentobject is sent to /students/register route, which registers a new student in our db 
 export const registerStudent = newStudent => {
     return axios
     .post('/students/register', {
@@ -53,7 +66,11 @@ export const registerStudent = newStudent => {
     })
 }
 
-//School Sign Up Function
+//Precondition: newSchool object is sent containing: 
+// userID: int
+// name: varchar
+// phoneNumber: int 
+//Postconidition: newSchool object is sent to /schools/register route, which registers a new school in our db 
 export const registerSchool = newSchool => {
     return axios 
     .post('/schools/register', {
@@ -67,6 +84,11 @@ export const registerSchool = newSchool => {
     })
 }
 
+//Precondition: newNurse object is sent containing: 
+// userID: int
+// phoneNumber: varchar
+// roomNumber: int 
+//Postconidition: newNurse object is sent to /nurses/register route, which registers a new nurse in our db 
 export const registerNurse = newNurse => {
     return axios
     .post('/nurses/register', {
@@ -80,6 +102,11 @@ export const registerNurse = newNurse => {
     })
 }
 
+//Precondition: newPediatrician object is sent containing: 
+// userID: int
+// name: varchar
+// phoneNumber: varchar
+//Postconidition: newPediatrician object is sent to /pediatricians/register route, which registers a new pediatrician in our db 
 export const registerPediatrician = newPediatrician => {
     return axios
     .post('/pediatricians/register', {
@@ -93,14 +120,9 @@ export const registerPediatrician = newPediatrician => {
     })
 }
 
-/*School update function 
-export const updateSchool = newSchool => {
-    return axios
-    .put('/schools/register?userID=97', {
-        name: newSchool.name,
-        phoneNumber: newSchool.phoneNumber
-    })
-}*/
+//Precondition: scan object is sent containing: 
+// bandID: int
+//Postconidition: newScan object is sent to /scans/register route, which registers a new scan in our db 
 export const registerScan = scan => {
     return axios
     .post('/scans/register', {
@@ -112,7 +134,9 @@ export const registerScan = scan => {
     })
 }
 
-
+//Precondition: scan object is sent containing: 
+// bandID: int
+//Postconidition: scan object is sent to /rfids/id route, which returns the userID associated with the bandID sent
 export const getUserID = scan => {
     return axios
     .post('/rfids/id', {
@@ -127,7 +151,9 @@ export const getUserID = scan => {
     })
 }
 
-
+//Precondition: id is sent containing:
+// bandID: int
+//Postconidition: email and password associated with userID are sent 
 export const getLogInInfo = id => {
     return axios
     .post('/users/logininfo', {
@@ -146,7 +172,10 @@ export const getLogInInfo = id => {
     })
 }
 
-//Log in function
+//Precondition: user object is sent containing: 
+// email: varchar
+// password: varchar
+//Postconidition: user is logged in 
 export const login = user => {
     return axios 
     .post('users/login', {
@@ -162,7 +191,9 @@ export const login = user => {
     })
 }
 
-//Log in scanned user function
+//Precondition: user object is sent containing: 
+// email: varchar
+//Postconidition: user is logged in 
 export const loginScan = user => {
     return axios 
     .post('users/loginscan', {

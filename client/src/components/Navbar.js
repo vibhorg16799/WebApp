@@ -1,8 +1,13 @@
-import React, {Component} from 'react'
-import {Link, withRouter} from 'react-router-dom'
+// This file contains the view and functionality for the Navbar
+
+import React, {Component} from 'react' // imports react 
+import {Link, withRouter} from 'react-router-dom' // imports react router and Link 
 
 
 class Navbar extends Component {
+
+    //Precondition: User is logged in 
+    //Postcondition: User is logged out and pushed to home page
     logOut(e) {
         e.preventDefault()
         localStorage.removeItem('usertoken')
@@ -13,12 +18,12 @@ class Navbar extends Component {
         const loginRegLink = (
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link to="/login"className="nav-link">
+                    <Link to="/login"className="nav-link"> {/* Log In Link*/}
                         Login
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/register"className="nav-link">
+                    <Link to="/register"className="nav-link"> {/* Register Link*/}
                         Register
                     </Link>
                 </li>
@@ -28,12 +33,12 @@ class Navbar extends Component {
         const userLink = (
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link to="/profile"className="nav-link">
+                    <Link to="/profile"className="nav-link"> {/* Profile Link*/}
                         User
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <a href="" onClick={this.logOut.bind(this)}className="nav-link">
+                    <a href="" onClick={this.logOut.bind(this)}className="nav-link"> {/* Log Out Link*/}
                         Logout
                     </a>
                 </li>
@@ -56,8 +61,8 @@ class Navbar extends Component {
                 <div className="collapse navbar-collapse justify-content-md-center" 
                 id="navbarsExample10">
                     <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link to="/"className="nav-link">
+                        <li className="nav-item"> 
+                            <Link to="/"className="nav-link"> {/* Home Link*/}
                                 Home
                             </Link>
                         </li>

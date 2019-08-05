@@ -1,16 +1,24 @@
-const express = require("express");
-const students = express.Router();
-const cors = require('cors');
-const jwt = require(`jsonwebtoken`);
+// This file handles all routes associated with the Student model 
+
+const express = require("express"); // imports express 
+const students = express.Router(); // sets students to express router 
+const cors = require('cors'); // imports cors 
+const jwt = require(`jsonwebtoken`); // imports jwt 
 const bcrypt = require('bcryptjs');
 
-const Student = require("../models/Student");
+const Student = require("../models/Student"); // imports student model 
 const User = require("../models/User")
-students.use(cors());
+students.use(cors()); // forces express router to use cors 
 
-process.env.SECRET_KEY = 'secret';
+process.env.SECRET_KEY = 'secret'; // jwt secret key
 
-
+// Precondition: frontend code posts to students/resgister: 
+// userID: int
+// pediatricianID: int
+// firstName: varchar 
+// lastName: varchar 
+// school: varchar
+// Postcondition: new record is created in student table
 students.post('/register', (req, res) => {
     const userData = {
         userID: req.body.userID,
@@ -20,40 +28,43 @@ students.post('/register', (req, res) => {
         school: req.body.school
     }
 
-    //Queries User table in RFID db to find all users in table 
+    // Queries student table in RFID db to find student in table where userID = userID sent
    Student.findOne({
         where: {
             userID: req.body.userID
         }
     })
-    //If user doesnt exist user is put into User table, if user does exist you are prompted with error "user already exists"
+    // If student doesnt exist student is put into student table, if student does exist you are prompted with error "student already exists"
     .then(student =>{
         if(!student) {
         //    bcrypt.hash(req.body.school, 10, (err, hash) => {
         //    userData.school = hash
-            Student.create(userData)
+            Student.create(userData) // creates new student record
             .then(student => {
                 res.json({status: student.firstName + ' ' +
                     student.lastName + ' registered'})
             })
             .catch(err => {
-                res.send('error: ' + err)
+                res.send('error: ' + err) // error handling 
             })
         
      } else {
-         res.json({error: "User already exists"})
+         res.json({error: "User already exists"}) // record already exists 
      }
 
   })
   .catch(err => {
-      res.send('error: ' + err)
+      res.send('error: ' + err) // error handling 
   })
 })
 
+// Precondition: frontend code posts to rfids/lgoin w/ parameters found in where clause:
+// userID: int 
+// Postcondition: record is returned in jwt form 
 students.post('/login', (req, res) => {
     Student.findOne({
         where: {
-            userID: req.body.userID
+            userID: req.body.userID // login parameter 
         }
     })
     .then(student => {
@@ -62,14 +73,14 @@ students.post('/login', (req, res) => {
                 let token = jwt.sign(student.dataValues, process.env.SECRET_KEY, {
                     expiresIn: 1440
                 })
-                res.send(token)
+                res.send(token) // sends record in jwt form 
             
         }else{
-            res.status(400).json({error: 'Student does not exist'})
+            res.status(400).json({error: 'Student does not exist'}) // record doesn't exist 
         }
     })
     .catch(err => {
-        res.status(400).json({error: err})
+        res.status(400).json({error: err}) // error handling 
     })
 })
 

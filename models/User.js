@@ -1,15 +1,9 @@
+// This file defines the user table from our database 
+
 const Sequelize = require("sequelize"); //imports sequelize
 const db = require("../database/db.js"); // imports DB file that points to rfid db
 
-
-/*Forces sequilize to use the name defined in each model definition instead of plural version of model name. 
-var opts = {
-    define: {
-        //prevent sequelize from pluralizing table names
-        freezeTableName: true
-    }
-}*/
-
+// creates sequelize model for user
 module.exports = db.sequelize.define(
     "user", {
         userID: {
@@ -19,12 +13,12 @@ module.exports = db.sequelize.define(
         },
         dateTimeCreated: {
             type: Sequelize.DATE,
-           // defaultValue: Sequelize.NOW
+           
         },
         password: {
             type: Sequelize.STRING,
             allowNull: false,
-           // defaultValue: 'jmast'
+           
         },
         profilePhoto: {
             type: Sequelize.STRING,
@@ -32,23 +26,20 @@ module.exports = db.sequelize.define(
         email: {
             type: Sequelize.STRING,
             allowNull: false,
-           // defaultValue: 'jmas4@email.com'
+           
         },
         address: {
             type: Sequelize.STRING,
             allowNull: false,
-           // defaultValue: 'jmas sesame street'
+           
         }
     },
     {
-        freezeTableName: true,
-        timestamps: false
+        freezeTableName: true, // forces table name to remain as defined 
+        timestamps: false // does not record timestamps automatically 
     },
     
 )
 
 
 
-
-//db.student.belongsTo(db.user, {foreignKey: 'userID'});
-//db.school.belongsTo(db.user, {foreignKey: 'userID'});

@@ -1,5 +1,8 @@
-const Sequelize = require("sequelize");
-const db = {};
+// This file imports our mySQL database via sequalize
+
+const Sequelize = require("sequelize"); // imports sequelize 
+const db = {}; // creates db object 
+
 //imports mySQL database w/ specified user account
 const sequelize = new Sequelize("rfid", "admin","Louisville@911RFID", {
     dialect: 'mysql',
@@ -16,6 +19,7 @@ const sequelize = new Sequelize("rfid", "admin","Louisville@911RFID", {
     }
 });
 
+//instantiates sequelize for models in db object 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
@@ -50,5 +54,5 @@ db.rfid.hasMany(db.scan);
 */
 
 
-
+// exports db object 
 module.exports = db;

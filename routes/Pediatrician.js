@@ -1,17 +1,23 @@
-const express = require("express");
-const pediatricians = express.Router();
-const cors = require('cors');
-const jwt = require(`jsonwebtoken`);
-const bcrypt = require('bcryptjs');
+// This file handles all routes associated with the Pediatrician model 
 
-const Pediatrician = require("../models/Pediatrician");
+const express = require("express"); // imports express 
+const pediatricians = express.Router(); // sets pediatrician to express router 
+const cors = require('cors'); // import cors 
+const jwt = require(`jsonwebtoken`); // import sjwt 
+const bcrypt = require('bcryptjs'); // import bcrypt 
 
-pediatricians.use(cors());
+const Pediatrician = require("../models/Pediatrician"); // import pediatrician model 
 
-process.env.SECRET_KEY = 'secret';
+pediatricians.use(cors()); // integrates express router with cors 
 
-//School.belongsTo(User, {foreignKey: 'userID'});
+process.env.SECRET_KEY = 'secret'; // secret key for jwt 
 
+
+// Precondition: frontend code posts to pediatricians/resgister:
+// userID: int
+// name: varchar
+// phoneNumber: varchar
+// Postcondition: new record is created in pediatrician table w/ the perameters sent
 pediatricians.post('/register', (req, res) => {
     const userData = {
         userID: req.body.userID,
@@ -19,18 +25,18 @@ pediatricians.post('/register', (req, res) => {
         phoneNumber: req.body.phoneNumber
     }
 
-    //Queries User table in RFID db to find all users in table 
+    // Queries pediatrician table in rfid db to find pediatrician where pediatrician.name = name sent to post request
    Pediatrician.findOne({
         where: {
             name: req.body.name
         }
     })
-    //If user doesnt exist user is put into User table, if user does exist you are prompted with error "user already exists"
+    // If pediatrician doesnt exist pediatrician is put into pediatrician table, if pediatrician does exist you are prompted with error "pediatrician already exists"
     .then(pediatrician =>{
         if(!pediatrician) {
          //   bcrypt.hash(req.body.phoneNumber, 10, (err, hash) => {
          //   userData.phoneNumber = hash
-            Pediatrician.create(userData)
+            Pediatrician.create(userData) // creates new pediatrician record 
             .then(pediatrician => {
                 res.json({status: pediatrician.name + ' registered'})
             })
@@ -39,15 +45,18 @@ pediatricians.post('/register', (req, res) => {
             })
         
      } else {
-         res.json({error: "Scan already exists"})
+         res.json({error: "Scan already exists"}) // pediatrician already exists
      }
 
   })
   .catch(err => {
-      res.send('error: ' + err)
+      res.send('error: ' + err) // error handling
   })
 })
 
+// Precondition: frontend code posts to nurses/login w/ perameters in where clause:
+// name: varchar
+// Postcondition: record is sent to frontend in jwt form 
 pediatricians.post('/login', (req, res) => {
     Pediatrician.findOne({
         where: {
@@ -60,14 +69,14 @@ pediatricians.post('/login', (req, res) => {
                 let token = jwt.sign(pediatrician.dataValues, process.env.SECRET_KEY, {
                     expiresIn: 1440
                 })
-                res.send(token)
+                res.send(token) // record sent in jwt form
             
         }else{
-            res.status(400).json({error: 'Scan does not exist'})
+            res.status(400).json({error: 'Scan does not exist'}) // no record found 
         }
     })
     .catch(err => {
-        res.status(400).json({error: err})
+        res.status(400).json({error: err}) // error handling 
     })
 })
 
