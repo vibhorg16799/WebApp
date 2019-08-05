@@ -17,14 +17,17 @@ module.exports = db.sequelize.define(
                 //references field userID
                 key: 'userID'
             },
-  /*          get userID() {                                                            TEST CODE FOR AUTO IMPLEMENTING USER ID IN BACKEND 
-                return user.max('userID').then(max =>{
-            
-                })
+            get() { 
+                var userID =  user.max('userID').then(max => {
+                    return max;
+                })                                                          
+                return userID; 
             },
-            set userID(userID) {
-                this.setDataValue('userID');
-            }*/
+            defaultValuye: {set(userID) {
+                this.setDataValue(userID);
+            }},
+
+            
         },
         pediatricianID: {
             type: Sequelize.INTEGER,

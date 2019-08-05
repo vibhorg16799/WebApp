@@ -12,6 +12,8 @@ schools.use(cors()); // sets express router to use cors
 
 process.env.SECRET_KEY = 'secret'; // jwt secret key 
 
+// holds the highest value of userID from user table to be used as auto implemented userID 
+
 
 // Precondition: frontend code posts to schools/resgister:
 // userID: int 
@@ -19,9 +21,15 @@ process.env.SECRET_KEY = 'secret'; // jwt secret key
 // phoneNumber: varchar
 // Postcondition: new record is created in school table
 schools.post('/register', (req, res) => {
+    
+    // holds the highest value of userID from user table to be used as auto implemented userID 
+    var newuserID = User.max('userID').then(max => {
+        newuserID = max;
+    })
+    
     const userData = {
         //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
-        userID: req.body.userID,
+        userID: newuserID,
         name: req.body.name,
         phoneNumber: req.body.phoneNumber
     }
@@ -29,7 +37,8 @@ schools.post('/register', (req, res) => {
     // Queries school table in RFID db to find school where userID = userID sent 
    School.findOne({
         where: {
-            userID: req.body.userID
+            userID: userData.userID
+            // was req.body.userID
         }
     })
     // If school doesnt exist school is put into school table, if school does exist you are prompted with error "school already exists"

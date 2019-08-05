@@ -12,6 +12,11 @@ students.use(cors()); // forces express router to use cors
 
 process.env.SECRET_KEY = 'secret'; // jwt secret key
 
+// holds the highest value of userID from user table to be used as auto implemented userID 
+var newuserID = User.max('userID').then(max => {
+    newuserID = max;
+})
+
 // Precondition: frontend code posts to students/resgister: 
 // userID: int
 // pediatricianID: int
@@ -21,7 +26,7 @@ process.env.SECRET_KEY = 'secret'; // jwt secret key
 // Postcondition: new record is created in student table
 students.post('/register', (req, res) => {
     const userData = {
-        userID: req.body.userID,
+        userID: newuserID,
         pediatricianID: req.body.pediatricianID,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -31,7 +36,8 @@ students.post('/register', (req, res) => {
     // Queries student table in RFID db to find student in table where userID = userID sent
    Student.findOne({
         where: {
-            userID: req.body.userID
+            userID: userData.userID
+            // was req.body.userID
         }
     })
     // If student doesnt exist student is put into student table, if student does exist you are prompted with error "student already exists"
