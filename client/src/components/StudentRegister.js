@@ -10,7 +10,7 @@ class StudentRegister extends Component {
     constructor(){
         super()
         this.state = { // state of StudentRegister component
-            userID: '',
+        //    userID: '',                OBSOLETE FIELD
             pediatricianID: '',
             firstName: '',
             lastName: '',
@@ -36,7 +36,7 @@ class StudentRegister extends Component {
         
         //newStudent object that holds data needed to register student
         const newStudent = {
-            userID: this.state.userID,
+        //    userID: this.state.userID,         OBSOLETE FIELD
             pediatricianID: this.state.pediatricianID,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -58,7 +58,7 @@ class StudentRegister extends Component {
                     <div className="col-md-6 mt-5 mx-auto">
                         <form noValidate onSubmit={this.onSubmit}>
                             <h1 className="h3 mb-3 font-weight-normal"> </h1>
-                            <div className="form-group">
+                        {/* <div className="form-group">
                                 <label htmlFor="userID">User ID</label>
                                 <input type="number"
                                  className="form-control"
@@ -67,17 +67,7 @@ class StudentRegister extends Component {
                                 value={this.state.userID}
                                 onChange={this.onChange}
                                 />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="pediatricianID">Pediatrician ID</label>
-                                <input type="number"
-                                 className="form-control"
-                                name="pediatricianID"
-                                placeholder="Enter Pediatrician ID"
-                                value={this.state.pediatricianID}
-                                onChange={this.onChange}
-                                />
-                            </div>
+                            </div>*/}
                             <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
                                 <input type="text"
@@ -97,6 +87,21 @@ class StudentRegister extends Component {
                                 value={this.state.lastName}
                                 onChange={this.onChange}
                                 />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="pediatricianID">Pediatrician</label>
+                                <select
+                                 className="form-control"
+                                 name="pediatricianID"
+                                 value={this.state.pediatricianID}
+                                 onChange={this.onChange}
+                                 >
+                                     <option value="0">Select School</option>
+                                     <option value="1">Dr.Peters</option>
+                                     <option value="2">Dr.Matthers</option>
+                                     <option value="3">Dr.Gupta</option>
+                                     <option value="4">Dr.Gine</option>
+                                </select> 
                             </div>
                             <div className="form-group">
                                 <label htmlFor="school">School</label>

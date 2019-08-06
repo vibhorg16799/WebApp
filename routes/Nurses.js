@@ -7,7 +7,7 @@ const jwt = require(`jsonwebtoken`); // imports jwt to send web token
 const bcrypt = require('bcryptjs'); // imports bcrypt to hash data 
 
 const Nurse = require("../models/Nurse"); // imports nurse table model
-const User = require("../models/User");
+const school = require("../models/School");
 nurss.use(cors()); // implements cross origin server requests into express router
 
 process.env.SECRET_KEY = 'secret'; // secret key for jwt
@@ -18,9 +18,14 @@ process.env.SECRET_KEY = 'secret'; // secret key for jwt
 // roomNumber: int 
 // Postcondition: new record is created in nurse table 
 nurss.post('/register', (req, res) => {
+
+    // holds the highest value of userID from school table to be used as auto implemented userID 
+    var newuserID = school.max('userID').then(max => {
+        newuserID = max;
+
     const userData = {
         // userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
-        userID: req.body.userID,
+        userID: newuserID,
         phoneNumber: req.body.phoneNumber,
         roomNumber: req.body.roomNumber
     }
@@ -28,7 +33,7 @@ nurss.post('/register', (req, res) => {
     // Queries Nurse table in rfid db to find user w/ userID sent to /nurses/register
    Nurse.findOne({
         where: {
-            userID: req.body.userID
+            userID: userData.userID
         }
     })
     // If nurse doesnt exist nurse is put into nurse table, if nurse does exist you are prompted with error "user already exists"
@@ -52,7 +57,7 @@ nurss.post('/register', (req, res) => {
   .catch(err => {
       res.send('error: ' + err) // error handling 
   })
-})
+})})
 
 // Precondition: frontend code posts to nurses/login, searches for variables with values in where clause:
 // userID: int

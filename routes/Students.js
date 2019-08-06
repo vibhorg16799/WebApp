@@ -12,11 +12,6 @@ students.use(cors()); // forces express router to use cors
 
 process.env.SECRET_KEY = 'secret'; // jwt secret key
 
-// holds the highest value of userID from user table to be used as auto implemented userID 
-var newuserID = User.max('userID').then(max => {
-    newuserID = max;
-})
-
 // Precondition: frontend code posts to students/resgister: 
 // userID: int
 // pediatricianID: int
@@ -25,6 +20,12 @@ var newuserID = User.max('userID').then(max => {
 // school: varchar
 // Postcondition: new record is created in student table
 students.post('/register', (req, res) => {
+
+    // holds the highest value of userID from user table to be used as auto implemented userID 
+    var newuserID = User.max('userID').then(max => {
+        newuserID = max;
+    
+
     const userData = {
         userID: newuserID,
         pediatricianID: req.body.pediatricianID,
@@ -62,7 +63,7 @@ students.post('/register', (req, res) => {
   .catch(err => {
       res.send('error: ' + err) // error handling 
   })
-})
+})})
 
 // Precondition: frontend code posts to rfids/lgoin w/ parameters found in where clause:
 // userID: int 

@@ -1,7 +1,7 @@
 // This file contains the view and functionality for the Profile page 
 
-import React, { Component } from 'react';
-import jwt_decode from 'jwt-decode';
+import React, { Component } from 'react'; // imports react
+import jwt_decode from 'jwt-decode'; // imports jwt decode module
 
 
 class Profile extends Component {

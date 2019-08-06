@@ -25,7 +25,7 @@ schools.post('/register', (req, res) => {
     // holds the highest value of userID from user table to be used as auto implemented userID 
     var newuserID = User.max('userID').then(max => {
         newuserID = max;
-    })
+    
     
     const userData = {
         //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
@@ -62,7 +62,7 @@ schools.post('/register', (req, res) => {
   .catch(err => {
       res.send('error: ' + err) // error handling 
   })
-})
+})})
 
 // Precondition: frontend code posts to schools/login w/ paremeters found in where clause:
 // userID: int

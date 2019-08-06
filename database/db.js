@@ -25,32 +25,32 @@ db.Sequelize = Sequelize;
 
 /* 
 // Models/Tables
-db.user = require('../models/User');
-db.student = require('../models/Student');
-db.school = require('../models/School');
-db.scan = require('../models/Scan');
-db.rfid = require('../models/RFID');
-db.pediatrician = require('../models/Pediatrician');
-db.nurse = require('../models/Nurse');
-db.news = require('../models/News');
-db.nearester = require('../models/NearestER');
-db.emergencyinfo = require('../models/EmergencyInfo');
-db.bloodchart = require('../models/BloodChart');
+user = require('../models/User');
+student = require('../models/Student');
+school = require('../models/School');
+scan = require('../models/Scan');
+rfid = require('../models/RFID');
+pediatrician = require('../models/Pediatrician');
+nurse = require('../models/Nurse');
+news = require('../models/News');
+nearester = require('../models/NearestER');
+emergencyinfo = require('../models/EmergencyInfo');
+bloodchart = require('../models/BloodChart');
 
 
 // Table Relationships
-db.student.belongsTo(db.user);
-db.school.belongsTo(db.user);
+student.belongsTo(duser);
+school.belongsTo(user);
 
-db.student.hasOne(db.emergencyinfo);
-db.student.hasOne(db.bloodchart);
-db.student.hasOne(db.pediatrician);
+student.hasOne(emergencyinfo);
+student.hasOne(bloodchart);
+student.hasOne(pediatrician);
 
-db.school.hasOne(db.nearester);
-db.school.hasOne(db.nurse);
-db.school.hasOne(db.news);
+school.hasOne(nearester);
+school.hasOne(nurse);
+school.hasOne(news);
 
-db.rfid.hasMany(db.scan);
+rfid.hasMany(db.scan);
 */
 
 

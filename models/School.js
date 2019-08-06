@@ -36,7 +36,12 @@ module.exports = db.sequelize.define(
     },
     {
         freezeTableName: true, // forces table name to remain as defined 
-        timestamps: false // does not record timestamps automatically 
+        timestamps: false, // does not record timestamps automatically 
+        /*classMethods: {
+            associate: function() {
+                school.belongsTo(user) // 1-1 school to user relationship
+            }
+        }*/
     },
 )
 

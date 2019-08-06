@@ -7,6 +7,7 @@ const jwt = require(`jsonwebtoken`); // import sjwt
 const bcrypt = require('bcryptjs'); // import bcrypt 
 
 const Pediatrician = require("../models/Pediatrician"); // import pediatrician model 
+const student = require("../models/Student"); // imports student model 
 
 pediatricians.use(cors()); // integrates express router with cors 
 
@@ -19,8 +20,13 @@ process.env.SECRET_KEY = 'secret'; // secret key for jwt
 // phoneNumber: varchar
 // Postcondition: new record is created in pediatrician table w/ the perameters sent
 pediatricians.post('/register', (req, res) => {
+
+    // holds the highest value of userID from student table to be used as auto implemented userID 
+    var newuserID = student.max('userID').then(max => {
+        newuserID = max;
+
     const userData = {
-        userID: req.body.userID,
+        userID: newuserID,
         name: req.body.name,
         phoneNumber: req.body.phoneNumber
     }
@@ -52,7 +58,7 @@ pediatricians.post('/register', (req, res) => {
   .catch(err => {
       res.send('error: ' + err) // error handling
   })
-})
+})})
 
 // Precondition: frontend code posts to nurses/login w/ perameters in where clause:
 // name: varchar
@@ -60,7 +66,7 @@ pediatricians.post('/register', (req, res) => {
 pediatricians.post('/login', (req, res) => {
     Pediatrician.findOne({
         where: {
-            name: req.body.name
+            userID: req.body.userID //login parameter
         }
     })
     .then(pediatrician => {
@@ -70,9 +76,9 @@ pediatricians.post('/login', (req, res) => {
                     expiresIn: 1440
                 })
                 res.send(token) // record sent in jwt form
-            
+          
         }else{
-            res.status(400).json({error: 'Scan does not exist'}) // no record found 
+            res.status(400).json({error: 'Pediatrician does not exist'}) // no record found 
         }
     })
     .catch(err => {

@@ -1,7 +1,8 @@
 // This file contains the view and functionality for the Login page 
 
 import React, { Component } from 'react'; // imports react 
-import {login, registerScan, getUserID, getLogInInfo, loginScan} from './UserFunctions' // imports functions from UserFunctions
+import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool} from './UserFunctions' // imports functions from UserFunctions
+import jwt_decode from 'jwt-decode'; // imports jwt decode module
 
 
 
@@ -47,9 +48,29 @@ class Login extends Component {
             //passes user object to login function, if successful push's user to their profile page 
             login(user).then(res => {
                 if(res) {
-                 this.props.history.push(`/profile`)
+                 this.props.history.push(`/profile`) 
             }
-        })
+        }) 
+
+        //Handles logging in of student or school users 
+        //maybe add field to db that holds student or school user to make process easier
+        //or find a way to test if this user ID is in student or school
+       /* 
+            login(user).then(user => {
+                console.log(jwt_decode(user))
+                if(user) {
+                //    loginSchool(jwt_decode(user)).then(user => {
+                        if(isSchool(jwt_decode(user)) === true){
+                            loginSchool(jwt_decode(user))
+                            console.log(jwt_decode(user));
+                        }
+                        else{
+                            loginStudent(jwt_decode(user))
+                            console.log(jwt_decode(user));
+                        }
+                    
+                }
+            }) */
     }
     else{
         console.log(user); // logs values for user var 

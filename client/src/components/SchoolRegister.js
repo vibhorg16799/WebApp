@@ -10,7 +10,7 @@ class SchoolRegister extends Component {
     constructor(){
         super()
         this.state = { // state of SchoolRegister component 
-            userID: '',
+        //    userID: '',   OBSOLETE FIELD, NO LONGER CAPTURED
             name: '',
             phoneNumber: '',
 
@@ -34,7 +34,7 @@ class SchoolRegister extends Component {
 
         //newSchool object that holds data needed to register newUser
         const newSchool = {
-            userID: this.state.userID,
+        //    userID: this.state.userID,     OBSOLETE FIELD, NO LONGER CAPTURED
             name: this.state.name,
             phoneNumber: this.state.phoneNumber,
 
@@ -54,7 +54,7 @@ class SchoolRegister extends Component {
                     <div className="col-md-6 mt-5 mx-auto">
                         <form noValidate onSubmit={this.onSubmit}>
                             <h1 className="h3 mb-3 font-weight-normal"> </h1>
-                            <div className="form-group">
+                           {/*  <div className="form-group">
                                 <label htmlFor="userID">User ID</label>  
                                 <input type="number"
                                  className="form-control"
@@ -63,7 +63,7 @@ class SchoolRegister extends Component {
                                 value={this.state.userID}
                                 onChange={this.onChange}
                                 />
-                            </div>
+                            </div>*/}
                             <div className="form-group">
                                 <label htmlFor="name">School</label> 
                                 <input type="text"

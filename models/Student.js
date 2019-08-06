@@ -4,7 +4,6 @@ const Sequelize = require("sequelize"); //imports sequelize
 const db = require("../database/db.js"); // imports DB file that points to rfid db 
 const user = require('./User') // imports User model 
 
-
 // creates sequelize model for student
 module.exports = db.sequelize.define(
     "student", {
@@ -44,9 +43,16 @@ module.exports = db.sequelize.define(
     },
     {
         freezeTableName: true, // forces table name to remain as defined 
-        timestamps: false // does not record timestamps automatically 
+        timestamps: false, // does not record timestamps automatically 
+        /*classMethods: {
+            associate: function() {
+                student.belongsTo(user) // 1-1 student to user relationship
+            }
+        }*/
     }
 )
+
+
 
 
 

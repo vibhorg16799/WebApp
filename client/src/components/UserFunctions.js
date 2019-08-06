@@ -5,12 +5,12 @@ import axios from 'axios'; // imports axios, our http client
 
 
 
-//Precondition: newUser object is sent containing: 
+// Precondition: newUser object is sent containing: 
 // email: varchar
 // password: varchar
 // address: varchar
 // profilePhoto: varchar
-//Postconidition: newUser object is sent to /users/register route, which registers a new user in our db 
+// Postconidition: newUser object is sent to /users/register route, which registers a new user in our db 
 export const register = newUser => {
  //   if(newUser.userType === 'student')
     return axios 
@@ -43,17 +43,17 @@ export const register = newUser => {
     }) */
 }
 
-//Precondition: newStudent object is sent containing: 
+// Precondition: newStudent object is sent containing: 
 // userID: int
 // pediatricianID: int
 // firstName: varchar
 // lastName: varchar
 // school: varchar
-//Postconidition: newStudentobject is sent to /students/register route, which registers a new student in our db 
+// Postconidition: newStudentobject is sent to /students/register route, which registers a new student in our db 
 export const registerStudent = newStudent => {
     return axios
     .post('/students/register', {
-        userID: newStudent.userID,
+    //    userID: newStudent.userID,        OBSOLETE FIELD, NO LONGER CAPTURED
         pediatricianID: newStudent.pediatricianID,
         firstName: newStudent.firstName,
         lastName: newStudent.lastName,
@@ -66,15 +66,15 @@ export const registerStudent = newStudent => {
     })
 }
 
-//Precondition: newSchool object is sent containing: 
+// Precondition: newSchool object is sent containing: 
 // userID: int
 // name: varchar
 // phoneNumber: int 
-//Postconidition: newSchool object is sent to /schools/register route, which registers a new school in our db 
+// Postconidition: newSchool object is sent to /schools/register route, which registers a new school in our db 
 export const registerSchool = newSchool => {
     return axios 
     .post('/schools/register', {
-        userID: newSchool.userID,
+    //   userID: newSchool.userID,         OBSOLETE FIELD, NO LONGER CAPTURED
         name: newSchool.name,
         phoneNumber: newSchool.phoneNumber
     })
@@ -84,15 +84,15 @@ export const registerSchool = newSchool => {
     })
 }
 
-//Precondition: newNurse object is sent containing: 
+// Precondition: newNurse object is sent containing: 
 // userID: int
 // phoneNumber: varchar
 // roomNumber: int 
-//Postconidition: newNurse object is sent to /nurses/register route, which registers a new nurse in our db 
+// Postconidition: newNurse object is sent to /nurses/register route, which registers a new nurse in our db 
 export const registerNurse = newNurse => {
     return axios
     .post('/nurses/register', {
-        userID: newNurse.userID,
+    //    userID: newNurse.userID,     OBSOLETE FIELD
         phoneNumber: newNurse.phoneNumber,
         roomNumber: newNurse.roomNumber
     })
@@ -102,15 +102,15 @@ export const registerNurse = newNurse => {
     })
 }
 
-//Precondition: newPediatrician object is sent containing: 
+// Precondition: newPediatrician object is sent containing: 
 // userID: int
 // name: varchar
 // phoneNumber: varchar
-//Postconidition: newPediatrician object is sent to /pediatricians/register route, which registers a new pediatrician in our db 
+// Postconidition: newPediatrician object is sent to /pediatricians/register route, which registers a new pediatrician in our db 
 export const registerPediatrician = newPediatrician => {
     return axios
     .post('/pediatricians/register', {
-        userID: newPediatrician.userID,
+    //    userID: newPediatrician.userID,    OBSOLETE FIELD 
         name: newPediatrician.name,
         phoneNumber: newPediatrician.phoneNumber
     })
@@ -120,9 +120,9 @@ export const registerPediatrician = newPediatrician => {
     })
 }
 
-//Precondition: scan object is sent containing: 
+// Precondition: scan object is sent containing: 
 // bandID: int
-//Postconidition: newScan object is sent to /scans/register route, which registers a new scan in our db 
+// Postconidition: newScan object is sent to /scans/register route, which registers a new scan in our db 
 export const registerScan = scan => {
     return axios
     .post('/scans/register', {
@@ -134,9 +134,9 @@ export const registerScan = scan => {
     })
 }
 
-//Precondition: scan object is sent containing: 
+// Precondition: scan object is sent containing: 
 // bandID: int
-//Postconidition: scan object is sent to /rfids/id route, which returns the userID associated with the bandID sent
+// Postconidition: scan object is sent to /rfids/id route, which returns the userID associated with the bandID sent
 export const getUserID = scan => {
     return axios
     .post('/rfids/id', {
@@ -151,9 +151,9 @@ export const getUserID = scan => {
     })
 }
 
-//Precondition: id is sent containing:
+// Precondition: id is sent containing:
 // bandID: int
-//Postconidition: email and password associated with userID are sent 
+// Postconidition: email and password associated with userID are sent 
 export const getLogInInfo = id => {
     return axios
     .post('/users/logininfo', {
@@ -172,10 +172,10 @@ export const getLogInInfo = id => {
     })
 }
 
-//Precondition: user object is sent containing: 
+// Precondition: user object is sent containing: 
 // email: varchar
 // password: varchar
-//Postconidition: user is logged in 
+// Postconidition: user is logged in 
 export const login = user => {
     return axios 
     .post('users/login', {
@@ -191,9 +191,9 @@ export const login = user => {
     })
 }
 
-//Precondition: user object is sent containing: 
+// Precondition: user object is sent containing: 
 // email: varchar
-//Postconidition: user is logged in 
+// Postconidition: user log in response token is set to local storage 'usertoken' and returned 
 export const loginScan = user => {
     return axios 
     .post('users/loginscan', {
@@ -209,7 +209,147 @@ export const loginScan = user => {
     })
 }
 
+// Precondition: user object is sent containing: 
+// userID: int
+// Postconidition: student log in response token is set to local storage 'studentToken' and returned
+export const loginStudent = user => {
+    return axios 
+    .post('students/login', {
+        userID: user.userID
+    })
+    .then(response => {
+        localStorage.setItem('studentToken', response.data)
+        return response.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
 
+// Precondition: user object is sent containing: 
+// userID: int
+// Postconidition: school log in response token is set to local storage 'schoolToken' and returned
+export const loginSchool = user => {
+    return axios 
+    .post('schools/login', {
+        userID: user.userID
+    })
+    .then(response => {
+        localStorage.setItem('schoolToken', response.data)
+        return response.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+// Precondition: user object is sent containing: 
+// userID: int
+// Postconidition: pediatrician log in response token is set to local storage 'pediatricianToken' and returned
+export const loginPediatrician = user => {
+    return axios 
+    .post('pediatricians/login', {
+        userID: user.userID
+    })
+    .then(response => {
+        localStorage.setItem('pediatricianToken', response.data)
+        return response.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+// Precondition: user object is sent containing: 
+// userID: int
+// Postconidition: nurse log in response token is set to local storage 'nurseToken' and returned 
+export const loginNurse = user => {
+    return axios 
+    .post('nurses/login', {
+        userID: user.userID
+    })
+    .then(response => {
+        localStorage.setItem('nurseToken', response.data)
+        return response.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+export const isSchool = user => {
+    return axios 
+    .post('schools/login', {
+        userID: user.userID
+    })
+    .then(response => {
+        if(response){
+            return true;
+        }
+        else{
+            return false;
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        return false;
+    })
+}
+
+
+
+/*
+//Precondition: 
+//Postcondition: 
+export const loginUser = user => {
+    return axios 
+    .post('users/login', {
+        email: user.email,
+        password: user.password
+    })
+    .then(response => {
+        localStorage.setItem('usertoken', response.data)
+        return response.data
+    })
+    .post('schools/login', {
+        userID: response.data.userID
+        }
+        .then(response => {
+            if(response){
+                localStorage.setItem('schoolData', response.data)
+                .post('nurses/login', {
+                    userID:response.data.userID
+                })
+                .then(response => {
+                    localStorage.setItem('nurseData', response.data)
+                })
+            }
+            else{
+                console.log(response.data)
+
+                .post('students/login', {
+                    userID: response.data.userID
+                })
+                .then(response => {
+                    localStorage.setItem('studentData', response.data)
+                })
+                .post('pediatricians/login', {
+                    userID: response.data.userID
+                })
+                .then(response => {
+                    localStorage.setItem('pediatricianData', response.data)
+                })
+            }
+            
+        })
+    
+    )
+
+    .catch(err => {
+        console.log(err)
+    })
+    
+}*/
 
     
 
