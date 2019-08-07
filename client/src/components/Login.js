@@ -69,7 +69,7 @@ class Login extends Component {
                             console.log(jwt_decode(user));
                             loginNurse(jwt_decode(user));
                             history.push(`/profile`); 
-                            window.location.reload();
+                            
                         }
                         //if user is not school, user is student, we return student attributes
                         else{
@@ -77,7 +77,7 @@ class Login extends Component {
                             console.log(jwt_decode(user));
                             loginPediatrician(jwt_decode(user));
                             history.push(`/studentprofile`);
-                            window.location.reload();
+                            
                         }
                     })
                     
