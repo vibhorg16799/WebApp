@@ -219,6 +219,7 @@ export const loginStudent = user => {
     })
     .then(response => {
         localStorage.setItem('studentToken', response.data)
+        console.log("student logged in" + response.data)
         return response.data
     })
     .catch(err => {
@@ -236,6 +237,7 @@ export const loginSchool = user => {
     })
     .then(response => {
         localStorage.setItem('schoolToken', response.data)
+        console.log("school logged in" + response.data)
         return response.data
     })
     .catch(err => {
@@ -253,7 +255,8 @@ export const loginPediatrician = user => {
     })
     .then(response => {
         localStorage.setItem('pediatricianToken', response.data)
-        return response.data
+        console.log("pediatrician logged in " + response.data);
+        return response.data;
     })
     .catch(err => {
         console.log(err)
@@ -270,7 +273,8 @@ export const loginNurse = user => {
     })
     .then(response => {
         localStorage.setItem('nurseToken', response.data)
-        return response.data
+        console.log("nurse logged in " + response.data);
+        return response.data;
     })
     .catch(err => {
         console.log(err)
@@ -283,7 +287,8 @@ export const isSchool = user => {
         userID: user.userID
     })
     .then(response => {
-        if(response){
+        console.log(response);
+        if(response.statusText === "OK"){
             return true;
         }
         else{
@@ -291,7 +296,7 @@ export const isSchool = user => {
         }
     })
     .catch(err => {
-        console.log(err)
+        console.log(err);
         return false;
     })
 }

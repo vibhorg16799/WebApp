@@ -2,8 +2,7 @@
 
 import React, { Component } from 'react'; // imports react 
 import {register} from './UserFunctions' // imports register function from userfunctions
-import {registerStudent} from './UserFunctions'
-import {registerSchool} from './UserFunctions'
+
 
 
 

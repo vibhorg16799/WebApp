@@ -1,7 +1,7 @@
 // This file contains the view and functionality for the Login page 
 
 import React, { Component } from 'react'; // imports react 
-import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool} from './UserFunctions' // imports functions from UserFunctions
+import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool, loginNurse, loginPediatrician} from './UserFunctions' // imports functions from UserFunctions
 import jwt_decode from 'jwt-decode'; // imports jwt decode module
 
 
@@ -46,31 +46,43 @@ class Login extends Component {
         if(this.state.bandID === '') {
 
             //passes user object to login function, if successful push's user to their profile page 
-            login(user).then(res => {
+            /*login(user).then(res => {
                 if(res) {
                  this.props.history.push(`/profile`) 
             }
-        }) 
+        })*/ 
 
         //Handles logging in of student or school users 
         //maybe add field to db that holds student or school user to make process easier
         //or find a way to test if this user ID is in student or school
-       /* 
+        
             login(user).then(user => {
                 console.log(jwt_decode(user))
                 if(user) {
                 //    loginSchool(jwt_decode(user)).then(user => {
-                        if(isSchool(jwt_decode(user)) === true){
-                            loginSchool(jwt_decode(user))
+                        var userDecoded = (jwt_decode(user));
+                        isSchool(userDecoded).then(isSchool => {
+
+                        //if user is school we return all school attributes 
+                        if(isSchool){
+                            loginSchool(jwt_decode(user));
                             console.log(jwt_decode(user));
+                            loginNurse(jwt_decode(user));
+                            history.push(`/profile`); 
+                            window.location.reload();
                         }
+                        //if user is not school, user is student, we return student attributes
                         else{
-                            loginStudent(jwt_decode(user))
+                            loginStudent(jwt_decode(user));
                             console.log(jwt_decode(user));
+                            loginPediatrician(jwt_decode(user));
+                            history.push(`/studentprofile`);
+                            window.location.reload();
                         }
+                    })
                     
                 }
-            }) */
+            }) 
     }
     else{
         console.log(user); // logs values for user var 
@@ -92,9 +104,29 @@ class Login extends Component {
                 console.log(user); // logs log in info, now stored in user object 
 
                 // calls loginScan function for object user object, then shows user their profile 
-                loginScan(user).then(res => {
-                    if(res) {
-                        history.push(`/profile`)
+                loginScan(user).then(user => {
+                    if(user) {
+                        
+                        var userDecoded = (jwt_decode(user));
+                        isSchool(userDecoded).then(isSchool => {
+
+                            //if user is school we return all school attributes
+                            if(isSchool){
+                                loginSchool(jwt_decode(user));
+                                console.log(jwt_decode(user));
+                                loginNurse(jwt_decode(user));
+                                history.push(`/profile`);
+                                localStorage.removeItem('studentToken'); //removes student token from local storage
+                            }
+                            //if user is not school, user is student, we return student attributes, temporary solution to signign out apropriate tokens
+                            else{
+                                loginStudent(jwt_decode(user));
+                                console.log(jwt_decode(user));
+                                loginPediatrician(jwt_decode(user));
+                                history.push(`/studentprofile`);
+                                localStorage.removeItem('schoolToken'); // removes school token from local storage, temporary solution to signing out appropriate tokens
+                            }
+                        })
                     }
                 })
             })

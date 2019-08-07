@@ -6,6 +6,7 @@ import Landing from './components/Landing' // imports landing page
 import Register from './components/Register' // imports register page 
 import Login from './components/Login' // imports login page 
 import Profile from './components/Profile' // imports profile page 
+import StudentProfile from './components/StudentProfile' // imports student profile page
 import SchoolRegister from './components/SchoolRegister' // imports school register page 
 import StudentRegister from './components/StudentRegister' // imports student register page 
 import StudentRegister2 from './components/StudentRegister2' // imports student register pt.2 page 
@@ -24,6 +25,7 @@ class App extends Component {
         <Route exact path="/register" component={Register}/>
         <Route exact path="/login" component={Login}/>
         <Route exact path="/profile" component={Profile}/>
+        <Route exact path="/studentprofile" component={StudentProfile}/>
         <Route exact path="/schoolregister" component={SchoolRegister}/>
         <Route exact path="/studentregister" component={StudentRegister}/>
         <Route exact path="/studentregister2" component={StudentRegister2}/>
