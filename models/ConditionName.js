@@ -2,28 +2,18 @@
 
 const Sequelize = require("sequelize"); //imports sequelize
 const db = require("../database/db.js"); // imports DB file that points to rfid db 
-const student = require("../models/Student") // imports student model for fk relationship
+
 
 
 // creates sequelize model for emergencyinfo
 module.exports = db.sequelize.define(
-    "emergencyinfo", {
-        userID: {
+    "conditionname", {
+        conditionID: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            references: {
-                //references model User
-                model: student,
-                //references field userID
-                key: 'userID'
-            },
         },
-        emergencyContact1: {
-            type: Sequelize.STRING,
-           
-        },
-        emergencyContact2: {
-            type: Sequelize.STRING,
+        conditionName: {
+            type: Sequelize.INTEGER,
            
         },
     },

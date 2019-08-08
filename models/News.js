@@ -9,6 +9,7 @@ module.exports = db.sequelize.define(
     "news", {
         userID: {
             type: Sequelize.INTEGER,
+            primaryKey: true,
             references: {
                 //references model User
                 model: school,

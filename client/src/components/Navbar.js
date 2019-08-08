@@ -2,42 +2,60 @@
 
 import React, {Component} from 'react' // imports react 
 import {Link, withRouter} from 'react-router-dom' // imports react router and Link 
-
+import jwt_decode from 'jwt-decode'; // imports jwt decode module
+import { isSchool } from './UserFunctions'; // imports isSChool function to test user type
 
 
 class Navbar extends Component {
 
-    //Precondition: User is logged in 
-    //Postcondition: User is logged out and pushed to home page
+    // Precondition: User is logged in 
+    // Postcondition: User is logged out and pushed to home page
     logOut(e) {
         e.preventDefault()
-        localStorage.removeItem('usertoken')
-        this.props.history.push(`/`)
 
-  /*      var userToken = localStorage.usertoken;
-        console.log(userToken);
-        isSchool(userToken).then(isSchool => {
+        console.log(jwt_decode(localStorage.usertoken)) //logs decoded user data 
 
-        if(isSchool) {
-        localStorage.removeItem('usertoken')
-        localStorage.removeItem('schoolToken')
-        this.props.history.push(`/`)
-        }
-        else{
-            localStorage.removeItem('usertoken')
-            localStorage.removeItem('studentToken')
-            this.props.history.push(`/`)
-        }
-    })*/
+        var userDecoded = (jwt_decode(localStorage.usertoken)); // holds user table data 
+        isSchool(userDecoded).then(isSchool => {
+
+            // if user is school the following is ran
+            if(isSchool){
+
+                try{
+                console.log("this is a school");
+                localStorage.removeItem('usertoken') // removes usertoken from localstorage
+                localStorage.removeItem('schoolToken') // removes school token from local storage
+                this.props.history.push(`/`)
+                
+                }
+                catch(error){
+                    console.log("error:" + error);
+                }
+                finally{
+                    
+                }
+
+            }
+            // if user is not a school the follwing is ran
+            else{
+
+                try{
+                console.log("this is not a school");
+                localStorage.removeItem('usertoken') // removes usertoken from localstorage
+                localStorage.removeItem('studentToken') // removes student token from local storage
+                this.props.history.push(`/`)
+                }
+                catch(error){
+                    console.log("error:" + error);
+                }
+                finally{
+                    
+                }
+
+            }
+
+        })
     }
-
-    //INPROGRESS LOG OUT STUDENT METHOD, WE WILL ALSO NEED LOG OUT SCHOOL METHOD
-    /*logOutStudent(e) {
-        e.preventDefault()
-        localStorage.removeItem('usertoken')
-        localStorage.removeItem('studentToken')
-        this.props.history.push(`/`)
-    }*/
 
     render() {
         const loginRegLink = (
@@ -55,6 +73,7 @@ class Navbar extends Component {
             </ul>
         )
 
+        // this link allows logged in school users to logout 
         const userLink = (
             <ul className="navbar-nav">
                 <li className="nav-item">
@@ -70,7 +89,7 @@ class Navbar extends Component {
             </ul>
         )
 
-        
+         // this link allows logged in student users to logout 
         const studentUserLink = (
             <ul className="navbar-nav">
                 <li className="nav-item">
@@ -108,7 +127,7 @@ class Navbar extends Component {
                             </Link>
                         </li>
                     </ul>
-                    {localStorage.usertoken ? userLink : loginRegLink}
+        {localStorage.usertoken ? userLink : loginRegLink} {/* if usertoken show userlink menu, if not loginreg link menu */}
                 </div>
             </nav>
         )

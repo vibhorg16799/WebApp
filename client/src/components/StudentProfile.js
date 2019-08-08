@@ -14,22 +14,26 @@ class Profile extends Component {
             firstName: '',
             lastName: '',
             school: '',
+            
         }
         
     }
+    
 
     //Precondition: page loaded correctly
     //Postcondition: state is set and page is reloaded 
     componentDidMount() {
 
-        const token = localStorage.usertoken // token sent from users/login route
+        try{
+            
+            const token = localStorage.getItem('usertoken') // token sent from users/login route
  
-        const decoded = jwt_decode(token) // decodes user response token 
-
-        const studentToken = localStorage.studentToken // token sent from students/login route
-
-        const studentDecoded = jwt_decode(studentToken); // decodes students/login token
-
+            const decoded = jwt_decode(token) // decodes user response token 
+    
+            const studentToken = localStorage.getItem('studentToken') // token sent from students/login route
+    
+            const studentDecoded = jwt_decode(studentToken) // decodes students/login token
+            
 
             this.setState({ // sets state to decoded user and student token contents
             profilePhoto: decoded.profilePhoto,
@@ -40,6 +44,16 @@ class Profile extends Component {
             lastName: studentDecoded.lastName,
             school: studentDecoded.school,
         })
+    }
+
+    catch(error) {
+        console.log("error: " + error);
+    }
+
+    finally {
+        this.forceUpdate()
+        console.log(this.state.email)
+    }
 
     }
 
@@ -86,5 +100,7 @@ class Profile extends Component {
         </div>
         )}
 }
+
+
 
 export default Profile;

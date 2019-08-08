@@ -19,6 +19,8 @@ class Profile extends Component {
     //Precondition: page loaded correctly
     //Postcondition: state is set and page is reloaded 
     componentDidMount() {
+
+        try{
         
         const token = localStorage.usertoken // token sent from users/login route
  
@@ -26,7 +28,7 @@ class Profile extends Component {
  
         const schoolToken = localStorage.schoolToken //token sent from schools/login route
 
-        const schoolDecoded = jwt_decode(schoolToken); // decodes schools/login token
+        const schoolDecoded = jwt_decode(schoolToken) // decodes schools/login token
 
 
         this.setState({ // sets state to decoded user and school token contents 
@@ -36,6 +38,15 @@ class Profile extends Component {
             name: schoolDecoded.name,
             phoneNumber: schoolDecoded.phoneNumber
         })
+        
+    }
+        catch(error){
+        console.log("error:" + error);
+    }
+        finally{
+            this.forceUpdate()
+            console.log(this.state.email)
+        }
 
     }
 
@@ -74,5 +85,7 @@ class Profile extends Component {
         </div>
         )}
 }
+
+
 
 export default Profile;

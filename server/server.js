@@ -18,6 +18,9 @@ var rfids = require("../routes/RFIDS") // Imports rfid table routes
 var scans = require("../routes/Scans") // Imports scan table routes
 var nurses = require("../routes/Nurses") // Imports nurse table routes
 var pediatricians = require("../routes/Pediatrician") // Imports pediatrician table routes
+var bloodcharts = require("../routes/BloodCharts") // Imports bloodchart table routes
+var emergencyinfos = require("../routes/EmergencyInfos") // Imports emergency info table routes 
+var nearesters = require("../routes/NearestERs") // Imports nearestER table routes
 
 //Implementing routes
 app.use('/users', users) // implements user routes from /users 
@@ -27,6 +30,10 @@ app.use('/rfids', rfids) // implements user routes from /rfids
 app.use('/scans', scans) // implements user routes from /scans 
 app.use('/nurses', nurses) // implements user routes from /nurses
 app.use('/pediatricians', pediatricians) // implements user routes from /pediatricians
+app.use('/bloodcharts', bloodcharts) // implements user routes from /bloodcharts
+app.use('/emergencyinfos', emergencyinfos) // implements user routes from         /emergencyinfos 
+app.use('/nearesters', nearesters) // implmenets user routes from nearesters
+
 
 // Precondition: variable port holds value that corresponds to an open port to host site on
 // Postcondition: Puts app on port held in variable port

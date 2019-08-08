@@ -44,17 +44,6 @@ class Login extends Component {
 
         // if no bandID is scanned in the page will attempt to login from the username and password fields
         if(this.state.bandID === '') {
-
-            //passes user object to login function, if successful push's user to their profile page 
-            /*login(user).then(res => {
-                if(res) {
-                 this.props.history.push(`/profile`) 
-            }
-        })*/ 
-
-        //Handles logging in of student or school users 
-        //maybe add field to db that holds student or school user to make process easier
-        //or find a way to test if this user ID is in student or school
         
             login(user).then(user => {
                 console.log(jwt_decode(user))
@@ -63,21 +52,19 @@ class Login extends Component {
                         var userDecoded = (jwt_decode(user));
                         isSchool(userDecoded).then(isSchool => {
 
-                        //if user is school we return all school attributes 
+                        // if user is school we return all school attributes 
                         if(isSchool){
                             loginSchool(jwt_decode(user));
                             console.log(jwt_decode(user));
                             loginNurse(jwt_decode(user));
                             history.push(`/profile`); 
-                            
                         }
-                        //if user is not school, user is student, we return student attributes
+                        // if user is not school, user is student, we return student attributes
                         else{
                             loginStudent(jwt_decode(user));
                             console.log(jwt_decode(user));
                             loginPediatrician(jwt_decode(user));
                             history.push(`/studentprofile`);
-                            
                         }
                     })
                     
