@@ -7,7 +7,7 @@ const jwt = require(`jsonwebtoken`); // import jwt
 const bcrypt = require('bcryptjs'); // import bcrypt 
 
 const MedicalCondition = require("../models/MedicalCondition"); // import rfid model 
-const User = require("../models/User"); 
+const rfid = require("../models/RFID"); // imports rfid model
 medicalconditions.use(cors()); // plugs express router into cors 
 
 process.env.SECRET_KEY = 'secret'; // secret key for jwt 
@@ -17,16 +17,26 @@ process.env.SECRET_KEY = 'secret'; // secret key for jwt
 // userID: int
 // Postcondition: new record is created in rfid table
 medicalconditions.post('/register', (req, res) => {
+    
+     // Finds max userID in rfid table WE WANT TO GET BAND ID OF MAX USERID
+     var newbandID = rfid.max('userID').then(max => {
+        newbandID = max;
+    
+    
     const userData = {
         //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
         bandID: req.body.bandID,
-        conditionID: req.body.userID,
+        conditionID: req.body.conditionID,
     }
+
+    console.log(newbandID);
+    
 
     // Queries rfid table in rfid db to find record where bandID = bandID sent to /rfids/register
    MedicalCondition.findOne({
         where: {
-            bandID: req.body.bandID
+            conditionID: req.body.conditionID,
+            bandID: newbandID,
         }
     })
     // If rfid doesnt exist rfid is put into rfid table, if rfid does exist you are prompted with error "user already exists"
@@ -35,7 +45,7 @@ medicalconditions.post('/register', (req, res) => {
          //   bcrypt.hash(req.body.phoneNumber, 10, (err, hash) => {
          //   userData.phoneNumber = hash
             MedicalCondition.create(userData) // creates new rfid record with data sent to route 
-            .then(rfid => {
+            .then(medicalcondition => {
                 res.json({status: medicalcondition.bandID + ' registered'})
             })
             .catch(err => {
@@ -50,7 +60,7 @@ medicalconditions.post('/register', (req, res) => {
   .catch(err => {
       res.send('error: ' + err) // error handling 
   })
-})
+})})
 
 // Precondition: frontend code posts to rfids/login w/ fields found in where clause:
 // bandID: int

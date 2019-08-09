@@ -1,7 +1,7 @@
 // This file defines the medicalcondition table from our database 
 
 const Sequelize = require("sequelize"); //imports sequelize
-const db = require("../database/db.js"); // imports DB file that points to rfid db 
+var db = require("../database/db.js"); // imports DB file that points to rfid db 
 const rfid = require("../models/RFID") // imports student model for fk relationship
 const allergyname = require("../models/AllergyName") // imports condition name for fk relationship 
 
@@ -10,6 +10,8 @@ module.exports = db.sequelize.define(
     "allergy", {
         bandID: {
             type: Sequelize.INTEGER,
+            primaryKey: true,
+            unique: false,
             //primaryKey: true, //primary key for now, may change to allow multiple userID entries, which implies multiple medical conditions 
             unique: 'compositeIndex',
             references: {

@@ -21,6 +21,12 @@ var pediatricians = require("../routes/Pediatrician") // Imports pediatrician ta
 var bloodcharts = require("../routes/BloodCharts") // Imports bloodchart table routes
 var emergencyinfos = require("../routes/EmergencyInfos") // Imports emergency info table routes 
 var nearesters = require("../routes/NearestERs") // Imports nearestER table routes
+var medicalconditions = require("../routes/MedicalConditions") // imports medicalcondition table routes
+var conditionnames = require("../routes/ConditionNames") // imports conditionnames table routes
+var contagiousdiseases = require("../routes/ContagiousDiseases") // imports contagiousdiseases table routes
+var diseasenames = require("../routes/DiseaseNames") // imports dieseasenames table routes
+var allergys = require("../routes/Allergys") // imports allergy table routes
+var allergynames = require("../routes/AllergyNames") // imports allergynames table routes
 
 //Implementing routes
 app.use('/users', users) // implements user routes from /users 
@@ -32,7 +38,13 @@ app.use('/nurses', nurses) // implements user routes from /nurses
 app.use('/pediatricians', pediatricians) // implements user routes from /pediatricians
 app.use('/bloodcharts', bloodcharts) // implements user routes from /bloodcharts
 app.use('/emergencyinfos', emergencyinfos) // implements user routes from         /emergencyinfos 
-app.use('/nearesters', nearesters) // implmenets user routes from nearesters
+app.use('/nearesters', nearesters) // implmenets user routes from /nearesters
+app.use('/medicalconditions', medicalconditions) // implements user routes from /medicalconditions
+app.use('/conditionnames', conditionnames) // implements user routes from conditionname 
+app.use('/contagiousdiseases', contagiousdiseases) // implements user routes from /contagiousdiseases
+app.use('/diseasenames', diseasenames) // implements user routes from /diseasenames
+app.use('/allergys', allergys) // implements user routes from /allergys 
+app.use('/allergynames', allergynames) // implements user routes from /allergynames
 
 
 // Precondition: variable port holds value that corresponds to an open port to host site on

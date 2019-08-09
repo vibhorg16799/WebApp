@@ -281,6 +281,10 @@ export const loginNurse = user => {
     })
 }
 
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+// if returns true user is school
+// if returns false user is not school
 export const isSchool = user => {
     return axios 
     .post('schools/login', {
@@ -300,6 +304,128 @@ export const isSchool = user => {
         return false;
     })
 }
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerEmergencyContact = user => {
+    return axios 
+    .post('/emergencyinfos/register', {
+        emergencyContact1: user.emergencyContact1,
+        emergencyContact2: user.emergencyContact2,
+    })
+    .then(response => {
+        console.log(response.data);
+
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerBloodChart = user => {
+    return axios 
+    .post('/bloodcharts/register', {
+        bloodType: user.bloodType,
+    })
+    .then(response => {
+        console.log(response.data);
+
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerNearestER = user => {
+    return axios 
+    .post('/nearesters/register', {
+        address: user.address,
+        phoneNumber: user.phoneNumber,
+    })
+    .then(response => {
+        console.log(response.data);
+
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerMedicalCondition = user => {
+    return axios 
+    .post('/medicalconditions/register', {
+        bandID: user.bandID,
+        conditionID: user.conditionID,
+    })
+    .then(response => {
+        console.log(response.data);
+
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerConditionName = user => {
+    return axios 
+    .post('/conditionnames/register', {
+        conditionID: user.conditionID,
+        conditionName: user.conditionName,
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerContagiousDisease = user => {
+    return axios 
+    .post('/contagiousdiseases/register', {
+        bandID: user.bandID,
+        diseaseID: user.diseaseID,
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerDiseaseName = user => {
+    return axios 
+    .post('/diseasenames/register', {
+        diseaseID: user.diseaseID,
+        diseaseName: user.diseaseName,
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerAllergy = user => {
+    return axios 
+    .post('/allergys/register', {
+        bandID: user.bandID,
+        allergyID: user.allergyID,
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+}
+
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerAllergyName = user => {
+    return axios 
+    .post('/allergynames/register', {
+        allergyID: user.allergyID,
+        allergyName: user.allergyName,
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+}
+
+
 
 
 

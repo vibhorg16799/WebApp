@@ -1,7 +1,7 @@
 // This file defines the user table from our database 
 
 const Sequelize = require("sequelize"); //imports sequelize
-const db = require("../database/db.js"); // imports DB file that points to rfid db
+var db = require("../database/db.js"); // imports DB file that points to rfid db
 const student = require("../models/Student") // imports student model for relationship 
 const school = require("../models/School") // imports school model for relationship
 

@@ -1,7 +1,7 @@
 // This file defines the emergencyinfo table from our database 
 
 const Sequelize = require("sequelize"); //imports sequelize
-const db = require("../database/db.js"); // imports DB file that points to rfid db 
+var db = require("../database/db.js"); // imports DB file that points to rfid db 
 
 
 
@@ -13,7 +13,7 @@ module.exports = db.sequelize.define(
             primaryKey: true,
         },
         conditionName: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
            
         },
     },

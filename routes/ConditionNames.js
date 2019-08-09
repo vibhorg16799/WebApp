@@ -36,7 +36,7 @@ conditionnames.post('/register', (req, res) => {
          //   userData.phoneNumber = hash
             ConditionName.create(userData) // creates new rfid record with data sent to route 
             .then(conditionname => {
-                res.json({status: conditionname.bandID + ' registered'})
+                res.json({status: conditionname.conditionID + ' registered'})
             })
             .catch(err => {
                 res.send('error: ' + err) // error handling 

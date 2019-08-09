@@ -135,8 +135,8 @@ class Register extends Component {
                                     value="student"
                                     checked={this.state.userType === "student"} 
                                     onChange={this.onChange}/>
-                                    student 
-                                </label>                                    
+                                     &nbsp;Student 
+                                </label>                                   
 
                                 <br></br>
                             
@@ -146,8 +146,8 @@ class Register extends Component {
                                     value="school"
                                     checked={this.state.userType === "school"}
                                     onChange={this.onChange}/>
-                                    school 
-                                </label>                                    
+                                     &nbsp;School  
+                                </label>&nbsp;                                    
                             </div>
 
                             <button type="submit"

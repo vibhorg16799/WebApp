@@ -1,10 +1,13 @@
 // This file imports our mySQL database via sequalize
 
 const Sequelize = require("sequelize"); // imports sequelize 
-const db = {}; // creates db object 
+var db = {}; // creates db object 
+
+
+
 
 //imports mySQL database w/ specified user account
-const sequelize = new Sequelize("rfid", "admin","Louisville@911RFID", {
+var sequelize = new Sequelize("rfid", "admin","Louisville@911RFID", {
     dialect: 'mysql',
     host: 'localhost',
     define: {

@@ -26,7 +26,8 @@ contagiousdiseases.post('/register', (req, res) => {
     // Queries rfid table in rfid db to find record where bandID = bandID sent to /rfids/register
    ContagiousDisease.findOne({
         where: {
-            bandID: req.body.bandID
+            bandID: req.body.bandID,
+            diseaseID: req.body.diseaseID,
         }
     })
     // If rfid doesnt exist rfid is put into rfid table, if rfid does exist you are prompted with error "user already exists"
