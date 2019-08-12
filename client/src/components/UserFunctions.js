@@ -425,6 +425,19 @@ export const registerAllergyName = user => {
     })
 }
 
+// Precondition: user object contains userID value
+// Postcondition: returns boolean variable that tells if user is school
+export const registerRFID = bandID => {
+    return axios 
+    .post('/rfids/register', {
+        bandID: bandID.bandID,
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+}
+
+
 
 
 

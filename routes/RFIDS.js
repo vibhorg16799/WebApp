@@ -17,10 +17,16 @@ process.env.SECRET_KEY = 'secret'; // secret key for jwt
 // userID: int
 // Postcondition: new record is created in rfid table
 rfids.post('/register', (req, res) => {
+
+    // holds the highest value of userID from user table to be used as auto implemented userID 
+    var newuserID = User.max('userID').then(max => {
+        newuserID = max;
+
+
     const userData = {
         //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
         bandID: req.body.bandID,
-        userID: req.body.userID,
+        userID: newuserID,
     }
 
     // Queries rfid table in rfid db to find record where bandID = bandID sent to /rfids/register
@@ -50,7 +56,7 @@ rfids.post('/register', (req, res) => {
   .catch(err => {
       res.send('error: ' + err) // error handling 
   })
-})
+})})
 
 // Precondition: frontend code posts to rfids/login w/ fields found in where clause:
 // bandID: int

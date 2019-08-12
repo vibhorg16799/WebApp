@@ -45,7 +45,7 @@ class StudentRegister extends Component {
         }
         // Sends newStudent object to registerStudent method, then push's user to studentregister2 page
         registerStudent(newStudent).then(res => {
-                this.props.history.push(`/studentregister2`)
+                this.props.history.push(`/bandregister`)
                 
         })
     }

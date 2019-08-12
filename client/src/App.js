@@ -11,6 +11,7 @@ import SchoolRegister from './components/SchoolRegister' // imports school regis
 import StudentRegister from './components/StudentRegister' // imports student register page 
 import StudentRegister2 from './components/StudentRegister2' // imports student register pt.2 page 
 import SchoolRegister2 from './components/SchoolRegister2' // imports school register pt.2 page
+import BandRegister from './components/BandRegister' // imports band register page
 
 //This class contains the entry point, views and runs our frontend react app 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
         <Route exact path="/studentregister" component={StudentRegister}/>
         <Route exact path="/studentregister2" component={StudentRegister2}/>
         <Route exact path="/schoolregister2" component={SchoolRegister2}/>
+        <Route exact path="/bandregister" component={BandRegister}/>
         </div>
       </div>
     </Router>

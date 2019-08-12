@@ -12,31 +12,44 @@ medicalconditions.use(cors()); // plugs express router into cors
 
 process.env.SECRET_KEY = 'secret'; // secret key for jwt 
 
+
+
 // Precondition: frontend code posts to rfids/resgister:
 // bandID: int
 // userID: int
 // Postcondition: new record is created in rfid table
 medicalconditions.post('/register', (req, res) => {
     
-     // Finds max userID in rfid table WE WANT TO GET BAND ID OF MAX USERID
-     var newbandID = rfid.max('userID').then(max => {
-        newbandID = max;
+    // sets res value to constant response, fixes glitch of not seeing res parameter
+    const response = res;
+     // Finds max userID in rfid table 
+     var newuserID = rfid.max('userID').then(max => {
+         newuserID = max;
+     
+        console.log(newuserID);
+
+    // Uses max userID from rfid table to find correlated bandID
+    var newbandID = rfid.findOne({
+        where: {
+            userID: newuserID
+        },
+    }).then( res => { // sets max userID bandID to variable newbandID 
+        newbandID = res;
     
+        // logs newbandID
+        console.log(newbandID.bandID)
     
+    // holds data to make new medical condition object
     const userData = {
-        //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
-        bandID: req.body.bandID,
+        bandID: newbandID.bandID,
         conditionID: req.body.conditionID,
     }
-
-    console.log(newbandID);
-    
 
     // Queries rfid table in rfid db to find record where bandID = bandID sent to /rfids/register
    MedicalCondition.findOne({
         where: {
             conditionID: req.body.conditionID,
-            bandID: newbandID,
+            bandID: newbandID.bandID,
         }
     })
     // If rfid doesnt exist rfid is put into rfid table, if rfid does exist you are prompted with error "user already exists"
@@ -46,21 +59,21 @@ medicalconditions.post('/register', (req, res) => {
          //   userData.phoneNumber = hash
             MedicalCondition.create(userData) // creates new rfid record with data sent to route 
             .then(medicalcondition => {
-                res.json({status: medicalcondition.bandID + ' registered'})
+                response.json({status: medicalcondition.bandID + ' registered'})
             })
             .catch(err => {
-                res.send('error: ' + err) // error handling 
+                response.send('error: ' + err) // error handling 
             })
         
      } else {
-         res.json({error: "Medical Condition already exists"}) // record already exists 
+        response.json({error: "Medical Condition already exists"}) // record exists 
      }
 
   })
   .catch(err => {
-      res.send('error: ' + err) // error handling 
+    response.send('error: ' + err) // error handling 
   })
-})})
+})})})
 
 // Precondition: frontend code posts to rfids/login w/ fields found in where clause:
 // bandID: int

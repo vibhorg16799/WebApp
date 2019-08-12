@@ -7,7 +7,7 @@ const jwt = require(`jsonwebtoken`); // import jwt
 const bcrypt = require('bcryptjs'); // import bcrypt 
 
 const Allergy = require("../models/Allergy"); // import rfid model 
-const User = require("../models/User"); 
+const rfid = require("../models/RFID"); 
 allergys.use(cors()); // plugs express router into cors 
 
 process.env.SECRET_KEY = 'secret'; // secret key for jwt 
@@ -17,9 +17,31 @@ process.env.SECRET_KEY = 'secret'; // secret key for jwt
 // userID: int
 // Postcondition: new record is created in rfid table
 allergys.post('/register', (req, res) => {
+
+    // sets res value to constant response, fixes glitch of not seeing res parameter
+    const response = res;
+
+    // Finds max userID in rfid table 
+    var newuserID = rfid.max('userID').then(max => {
+        newuserID = max;
+    
+       console.log(newuserID);
+
+    // Uses max userID from rfid table to find correlated bandID
+    var newbandID = rfid.findOne({
+        where: {
+            userID: newuserID
+        },
+    }).then( res => { // sets max userID bandID to variable newbandID 
+        newbandID = res;
+    
+        // logs newbandID
+        console.log(newbandID.bandID)
+    
+
     const userData = {
         //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
-        bandID: req.body.bandID,
+        bandID: newbandID.bandID,
         allergyID: req.body.allergyID,
     }
 
@@ -27,7 +49,7 @@ allergys.post('/register', (req, res) => {
    Allergy.findOne({
         where: {
             allergyID: req.body.allergyID,
-            bandID: req.body.bandID,
+            bandID: newbandID.bandID,
         }
     })
     // If rfid doesnt exist rfid is put into rfid table, if rfid does exist you are prompted with error "user already exists"
@@ -37,21 +59,21 @@ allergys.post('/register', (req, res) => {
          //   userData.phoneNumber = hash
             Allergy.create(userData) // creates new rfid record with data sent to route 
             .then(allergy => {
-                res.json({status: allergy.allergyID + ' registered'})
+                response.json({status: allergy.bandID + ' registered'})
             })
             .catch(err => {
-                res.send('error: ' + err) // error handling 
+                response.send('error: ' + err) // error handling 
             })
         
      } else {
-         res.json({error: "Allergy already exists"}) // record already exists 
+         response.json({error: "Allergy already exists"}) // record already exists 
      }
 
   })
   .catch(err => {
-      res.send('error: ' + err) // error handling 
+      response.send('error: ' + err) // error handling 
   })
-})
+})})})
 
 // Precondition: frontend code posts to rfids/login w/ fields found in where clause:
 // bandID: int

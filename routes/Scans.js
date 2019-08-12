@@ -27,7 +27,8 @@ scans.post('/register', (req, res) => {
     // Queries scan table in RFID db to find scan in table where bandID = band ID sent 
    Scan.findOne({
         where: {
-            bandID: req.body.bandID
+            bandID: req.body.bandID,
+            dateTimeScanned: userData.dateTimeScanned,
         }
     })
     // If scan doesnt exist scan is put into scan table, if scan does exist you are prompted with error "scan already exists"

@@ -7,7 +7,7 @@ const jwt = require(`jsonwebtoken`); // import jwt
 const bcrypt = require('bcryptjs'); // import bcrypt 
 
 const ContagiousDisease = require("../models/ContagiousDisease"); // import rfid model 
-const User = require("../models/User"); 
+const rfid = require("../models/RFID"); 
 contagiousdiseases.use(cors()); // plugs express router into cors 
 
 process.env.SECRET_KEY = 'secret'; // secret key for jwt 
@@ -17,16 +17,37 @@ process.env.SECRET_KEY = 'secret'; // secret key for jwt
 // userID: int
 // Postcondition: new record is created in rfid table
 contagiousdiseases.post('/register', (req, res) => {
+
+    // sets res value to constant response, fixes glitch of not seeing res parameter
+    const response = res;
+
+     // Finds max userID in rfid table 
+     var newuserID = rfid.max('userID').then(max => {
+        newuserID = max;
+    
+       console.log(newuserID);
+
+       // Uses max userID from rfid table to find correlated bandID
+    var newbandID = rfid.findOne({
+        where: {
+            userID: newuserID
+        },
+    }).then( res => { // sets max userID bandID to variable newbandID 
+        newbandID = res;
+    
+        // logs newbandID
+        console.log(newbandID.bandID)
+
     const userData = {
         //userID is set to pull from body text of POST request, make system to automate userID POST from user table to school and student tables
-        bandID: req.body.bandID,
+        bandID: newbandID.bandID,
         diseaseID: req.body.diseaseID,
     }
 
     // Queries rfid table in rfid db to find record where bandID = bandID sent to /rfids/register
    ContagiousDisease.findOne({
         where: {
-            bandID: req.body.bandID,
+            bandID: newbandID.bandID,
             diseaseID: req.body.diseaseID,
         }
     })
@@ -37,21 +58,21 @@ contagiousdiseases.post('/register', (req, res) => {
          //   userData.phoneNumber = hash
             ContagiousDisease.create(userData) // creates new rfid record with data sent to route 
             .then(contagiousdisease => {
-                res.json({status: contagiousdisease.bandID + ' registered'})
+                response.json({status: contagiousdisease.bandID + ' registered'})
             })
             .catch(err => {
-                res.send('error: ' + err) // error handling 
+                response.send('error: ' + err) // error handling 
             })
         
      } else {
-         res.json({error: "contagious disease already exists"}) // record already exists 
+         response.json({error: "contagious disease already exists"}) // record already exists 
      }
 
   })
   .catch(err => {
-      res.send('error: ' + err) // error handling 
+      response.send('error: ' + err) // error handling 
   })
-})
+})})})
 
 // Precondition: frontend code posts to rfids/login w/ fields found in where clause:
 // bandID: int
