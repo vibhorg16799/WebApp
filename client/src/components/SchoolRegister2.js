@@ -31,6 +31,8 @@ class SchoolRegister2 extends Component {
     onSubmit(e){
         e.preventDefault()
 
+        try{
+
         //newNurse object that holds data needed to register nurse
         const newNurse = {
         //    userID: this.state.userID,      OBSOLETE FIELD
@@ -43,6 +45,10 @@ class SchoolRegister2 extends Component {
         registerNurse(newNurse).then(res => {
                 this.props.history.push(`/login`)
         })
+        }
+        catch(error){
+            console.log(error);
+        }
     }
 
     render() {

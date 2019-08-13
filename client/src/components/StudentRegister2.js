@@ -111,6 +111,8 @@ class StudentRegister2 extends Component {
     onSubmit(e){
         e.preventDefault()
 
+        try{
+
         // userEmergency object that holds data needed to register emergencyInfo
         const userEmergency = {
             emergencyContact1: this.state.emergencyContact1,
@@ -172,7 +174,7 @@ class StudentRegister2 extends Component {
             function registerAllergyList (selectedAllergies) {
 
                 console.log(selectedAllergies);
-                console.log(selectedAllergies[0].id);
+               // console.log(selectedAllergies[0].id);
                 for (var i = 0; i < selectedAllergies.length; i++){
                 
                 var user = {allergyID: selectedAllergies[i].id}
@@ -188,7 +190,7 @@ class StudentRegister2 extends Component {
         function registerDiseaseList (selectedDiseases) {
 
             console.log(selectedDiseases);
-            console.log(selectedDiseases[0].id);
+          //  console.log(selectedDiseases[0].id);
             for (var i = 0; i < selectedDiseases.length; i++){
             
             var user = {diseaseID: selectedDiseases[i].id}
@@ -204,7 +206,7 @@ class StudentRegister2 extends Component {
     function registerConditionList (selectedConditions) {
 
         console.log(selectedConditions);
-        console.log(selectedConditions[0].id);
+      //  console.log(selectedConditions[0].id);
         for (var i = 0; i < selectedConditions.length; i++){
         
         var user = {conditionID: selectedConditions[i].id}
@@ -215,7 +217,12 @@ class StudentRegister2 extends Component {
     })
 }
 }
-        
+        }
+        catch(error){
+
+            console.log("Error: " + error);
+
+        }
     }
 
     // MAKE SURE this.state, the newStudent object and htmlFor, and name all match

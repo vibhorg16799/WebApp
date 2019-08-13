@@ -32,6 +32,8 @@ class SchoolRegister extends Component {
     onSubmit(e){
         e.preventDefault()
 
+        try{
+
         //newSchool object that holds data needed to register newUser
         const newSchool = {
         //    userID: this.state.userID,     OBSOLETE FIELD, NO LONGER CAPTURED
@@ -45,6 +47,10 @@ class SchoolRegister extends Component {
         registerSchool(newSchool).then(res => {
                 this.props.history.push(`/schoolregister2`)
         })
+        }
+        catch(error){
+            console.log("Error: " + error);
+        }
     }
 
     render() {

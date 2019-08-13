@@ -115,6 +115,29 @@ medicalconditions.post('/id', (req,res) => {
     })
 })
 
+// Precondition: frontend code posts to allergys/list, sequelize searches for fields found in where clause:
+// bandID: int
+// Postcondition: returns Allergies of bandID provided
+medicalconditions.post('/list', (req,res) => {
+    MedicalCondition.findAll({
+        where: {
+            bandID: req.body.bandID
+        }
+    })
+    .then((condition) => {
+        if(condition){
+        res.send(condition);
+        }
+        else{
+            res.status(400).json({error: 'Condition does not exist'}); // record not found 
+        }
+    })
+    .catch(err =>{
+        console.log("Error: " + err);
+    })
+})
+
+
 
 
 module.exports = medicalconditions;

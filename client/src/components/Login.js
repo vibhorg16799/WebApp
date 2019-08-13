@@ -1,7 +1,7 @@
 // This file contains the view and functionality for the Login page 
 
 import React, { Component } from 'react'; // imports react 
-import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool, loginNurse, loginPediatrician} from './UserFunctions' // imports functions from UserFunctions
+import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool, loginNurse, loginPediatrician, loginEmergencyInfo, loginBloodChart, loginRFID, loginMedicalCondition} from './UserFunctions' // imports functions from UserFunctions
 import jwt_decode from 'jwt-decode'; // imports jwt decode module
 
 
@@ -64,6 +64,9 @@ class Login extends Component {
                             loginStudent(jwt_decode(user));
                             console.log(jwt_decode(user));
                             loginPediatrician(jwt_decode(user));
+                            loginEmergencyInfo(jwt_decode(user));
+                            loginBloodChart(jwt_decode(user));
+                            loginRFID(jwt_decode(user));
                             history.push(`/studentprofile`);
                         }
                     })
@@ -110,6 +113,9 @@ class Login extends Component {
                                 loginStudent(jwt_decode(user));
                                 console.log(jwt_decode(user));
                                 loginPediatrician(jwt_decode(user));
+                                loginEmergencyInfo(jwt_decode(user));
+                                loginBloodChart(jwt_decode(user));
+                                loginRFID(jwt_decode(user));
                                 history.push(`/studentprofile`);
                                 localStorage.removeItem('schoolToken'); // removes school token from local storage, temporary solution to signing out appropriate tokens
                             }
@@ -122,6 +128,9 @@ class Login extends Component {
         catch{console.error(); // error handling 
         
 
+        }
+        finally{
+            
         }
     }
 }

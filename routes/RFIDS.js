@@ -64,7 +64,7 @@ rfids.post('/register', (req, res) => {
 rfids.post('/login', (req, res) => {
     RFID.findOne({
         where: {
-            bandID: req.body.bandID, //log in parameter 
+            userID: req.body.userID, //log in parameter 
         }
     })
     .then(rfid => {
@@ -74,7 +74,7 @@ rfids.post('/login', (req, res) => {
                     expiresIn: 1440
                 })
                 res.send(token) // record data sent as jwt 
-            
+                
         }else{
             res.status(400).json({error: 'RFID does not exist'}) // record not found 
         }
@@ -95,6 +95,29 @@ rfids.post('/id', (req,res) => {
     })
     .then((rfid) => {
         res.send({userID: rfid.userID})
+    })
+})
+
+// Precondition: frontend code posts to rfids/bands, sequelize searches for fields found in where clause:
+// bandID: int
+// Postcondition: returns bandID's of userID provided
+rfids.post('/bands', (req,res) => {
+    RFID.findAll({
+        attributes: ['bandID'],
+        where: {
+            userID: req.body.userID
+        }
+    })
+    .then((rfid) => {
+        if(rfid){
+        res.send(rfid);
+        }
+        else{
+            res.status(400).json({error: 'RFID does not exist'}); // record not found 
+        }
+    })
+    .catch(err =>{
+        console.log("Error: " + err);
     })
 })
 

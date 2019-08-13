@@ -79,9 +79,9 @@ allergys.post('/register', (req, res) => {
 // bandID: int
 // Postcondition: record is sent to frontend in jwt form
 allergys.post('/login', (req, res) => {
-    DiseaseName.findOne({
+    Allergy.findOne({
         where: {
-            allergyID: req.body.allergyID//log in parameter 
+            bandID: req.body.bandID //log in parameter 
         }
     })
     .then(allergy => {
@@ -90,14 +90,36 @@ allergys.post('/login', (req, res) => {
                 let token = jwt.sign(allergy.dataValues, process.env.SECRET_KEY, {
                     expiresIn: 1440
                 })
-                res.send(token) // record data sent as jwt 
+                res.json(token) // record data sent as jwt 
             
         }else{
             res.status(400).json({error: 'Allergy does not exist'}) // record not found 
         }
     })
     .catch(err => {
-        res.status(400).json({error: err}) // error handling
+        res.status(400).json("Error " + err) // error handling
+    })
+})
+
+// Precondition: frontend code posts to allergys/list, sequelize searches for fields found in where clause:
+// bandID: int
+// Postcondition: returns Allergies of bandID provided
+allergys.post('/list', (req,res) => {
+    Allergy.findAll({
+        where: {
+            bandID: req.body.bandID
+        }
+    })
+    .then((allergy) => {
+        if(allergy){
+        res.send(allergy);
+        }
+        else{
+            res.status(400).json({error: 'Allergy does not exist'}); // record not found 
+        }
+    })
+    .catch(err =>{
+        console.log("Error: " + err);
     })
 })
 

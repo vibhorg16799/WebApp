@@ -33,6 +33,7 @@ class StudentRegister extends Component {
     onSubmit(e){
         e.preventDefault()
 
+        try{
         
         //newStudent object that holds data needed to register student
         const newStudent = {
@@ -48,6 +49,10 @@ class StudentRegister extends Component {
                 this.props.history.push(`/bandregister`)
                 
         })
+    }
+    catch(error){
+        console.log("Error: " + error);
+        }
     }
 
     // MAKE SURE this.state, the newStudent object and htmlFor, and name all match

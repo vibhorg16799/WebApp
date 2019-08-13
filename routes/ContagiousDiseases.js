@@ -100,6 +100,28 @@ contagiousdiseases.post('/login', (req, res) => {
     })
 })
 
+// Precondition: frontend code posts to allergys/list, sequelize searches for fields found in where clause:
+// bandID: int
+// Postcondition: returns Allergies of bandID provided
+contagiousdiseases.post('/list', (req,res) => {
+    ContagiousDisease.findAll({
+        where: {
+            bandID: req.body.bandID
+        }
+    })
+    .then((disease) => {
+        if(disease){
+        res.send(disease);
+        }
+        else{
+            res.status(400).json({error: 'Disease does not exist'}); // record not found 
+        }
+    })
+    .catch(err =>{
+        console.log("Error: " + err);
+    })
+})
+
 
 
 module.exports = contagiousdiseases;

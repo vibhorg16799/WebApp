@@ -29,7 +29,7 @@ class BandRegister extends Component {
     onSubmit(e){
         e.preventDefault()
 
-        
+        try{
         // bandID1 object holds state of bandID 1 
         const bandID1 = {
             bandID: this.state.bandID1
@@ -59,9 +59,11 @@ class BandRegister extends Component {
         registerRFID(bandID3).then(res => {
              this.props.history.push(`/studentregister2`)
     })
-
-    }
-
+        }
+        catch(error){
+            console.log("Error" + error);
+        }
+}
     // MAKE SURE this.state, the newStudent object and htmlFor, and name all match
     render() {
         return (

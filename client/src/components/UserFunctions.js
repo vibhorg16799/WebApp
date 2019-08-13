@@ -438,6 +438,137 @@ export const registerRFID = bandID => {
 }
 
 
+// Precondition: user object contains bandID value
+// Postcondition: returns list of RFID codes associated to userID
+export const loginRFID = user => {
+    return axios 
+    .post('/rfids/bands', {
+        userID: user.userID,
+    })
+    .then(response => {
+        localStorage.setItem('rfidToken', JSON.stringify(response.data));
+        console.log("RFID's logged in " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const loginEmergencyInfo = user => {
+    return axios 
+    .post('/emergencyinfos/login', {
+        userID: user.userID,
+    })
+    .then(response => {
+        localStorage.setItem('emergencyToken', response.data)
+        console.log("Emergency Info logged in " + response.data);
+        return response.data;
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const loginBloodChart = user => {
+    return axios 
+    .post('/bloodcharts/login', {
+        userID: user.userID,
+    })
+    .then(response => {
+        localStorage.setItem('bloodToken', response.data)
+        console.log("Blood Chart logged in " + response.data);
+        return response.data;
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const loginMedicalCondition = band => {
+    return axios 
+    .post('/medicalconditions/list', {
+        bandID: band.bandID,
+    })
+    .then(response => {
+        localStorage.setItem('conditionToken', response.data)
+        console.log("Medical Condition logged in " + response.data);
+        return response.data;
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const loginContagiousDisease = band => {
+    return axios 
+    .post('/contagiousdiseases/list', {
+        bandID: band.bandID,
+    })
+    .then(response => {
+        localStorage.setItem('diseaseToken', response.data)
+        console.log("Contagious Disease logged in " + response.data);
+        return response.data;
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const loginAllergen = band => {
+    return axios 
+    .post('/allergys/list', {
+        bandID: band.bandID,
+    })
+    .then(response => {
+        localStorage.setItem('allergyToken', response.data)
+        console.log("Allergy logged in " + response.data);
+        return response.data;
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const allergenName = allergen => {
+    return axios 
+    .post('/allergynames/login', {
+        allergenID: allergen.allergenID,
+    })
+    .then(response => {
+        localStorage.setItem('allergyNameToken', response.data)
+        console.log("Allergy Name logged in " + response.data);
+        return response.data;
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const diseaseName = disease => {
+    return axios 
+    .post('/diseasenames/login', {
+        diseaseID: disease.diseaseID,
+    })
+    .then(response => {
+        localStorage.setItem('diseaseNameToken', response.data)
+        console.log("Disease Name logged in " + response.data);
+        return response.data;
+    })
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const conditionName = condition => {
+    return axios 
+    .post('/conditionnames/login', {
+        conditionID: condition.conditionID,
+    })
+    .then(response => {
+        localStorage.setItem('conditionNameToken', response.data)
+        console.log("Condition Name logged in " + response.data);
+        return response.data;
+    })
+}
+
+
+
 
 
 

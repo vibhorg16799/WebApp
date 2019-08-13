@@ -14,6 +14,10 @@ class Profile extends Component {
             firstName: '',
             lastName: '',
             school: '',
+            bloodType: '',
+            emergencyContact1: '',
+            emergencyContact2: '',
+            rfidCodes: [],
             
         }
         
@@ -25,15 +29,31 @@ class Profile extends Component {
     componentDidMount() {
 
         try{
-            
+
+            // JWT Tokens
             const token = localStorage.getItem('usertoken') // token sent from users/login route
+
+            const studentToken = localStorage.getItem('studentToken') // token sent from students/login route
+
+            const rfidToken = localStorage.getItem('rfidToken') // token sent from rfids/bands
  
+            const emergencyToken = localStorage.getItem('emergencyToken') // token sent from emergenycinfos/login
+
+            const bloodToken = localStorage.getItem('bloodToken') // token sent from bloodcharts/login
+
+
+            // JWT Decoded
             const decoded = jwt_decode(token) // decodes user response token 
     
-            const studentToken = localStorage.getItem('studentToken') // token sent from students/login route
-    
             const studentDecoded = jwt_decode(studentToken) // decodes students/login token
+
+            const emergencyDecoded = jwt_decode(emergencyToken) // decodes emergencyinfos/login token
+
+            const bloodDecoded = jwt_decode(bloodToken) // decodes bloodchart/login
             
+        
+            
+            console.log("rfidToken " + rfidToken);
 
             this.setState({ // sets state to decoded user and student token contents
             profilePhoto: decoded.profilePhoto,
@@ -43,16 +63,19 @@ class Profile extends Component {
             firstName: studentDecoded.firstName,
             lastName: studentDecoded.lastName,
             school: studentDecoded.school,
+            bloodType: bloodDecoded.bloodType,
+            emergencyContact1: emergencyDecoded.emergencyContact1,
+            emergencyContact2: emergencyDecoded.emergencyContact2,
+            rfidCodes: rfidToken,
         })
     }
 
     catch(error) {
         console.log("error: " + error);
     }
-
     finally {
         this.forceUpdate()
-        console.log(this.state.email)
+
     }
 
     }
@@ -93,6 +116,22 @@ class Profile extends Component {
                         <tr>
                             <td>School</td>
                             <td>{this.state.school}</td>
+                        </tr> 
+                        <tr>
+                            <td>Blood Type</td>
+                            <td>{this.state.bloodType}</td>
+                        </tr> 
+                        <tr>
+                            <td>Emergency Contact 1</td>
+                            <td>{this.state.emergencyContact1}</td>
+                        </tr> 
+                        <tr>
+                            <td>Emergency Contact 2</td>
+                            <td>{this.state.emergencyContact2}</td>
+                        </tr> 
+                        <tr>
+                            <td>RFID Codes</td>
+                            <td>{this.state.rfidCodes}</td>
                         </tr> 
                     </tbody>
                 </table>
