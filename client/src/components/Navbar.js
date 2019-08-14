@@ -41,8 +41,17 @@ class Navbar extends Component {
 
                 try{
                 console.log("this is not a school");
-                localStorage.removeItem('usertoken') // removes usertoken from localstorage
-                localStorage.removeItem('studentToken') // removes student token from local storage
+                localStorage.removeItem('usertoken'); // removes usertoken from localstorage
+                localStorage.removeItem('studentToken'); // removes student token from local storage
+                localStorage.removeItem('allergyToken');
+                localStorage.removeItem('allergyNameList');
+                localStorage.removeItem('conditionToken');
+                localStorage.removeItem('conditionNameList');
+                localStorage.removeItem('diseaseToken');
+                localStorage.removeItem('diseaseNameList');
+                localStorage.removeItem('bloodToken');
+                localStorage.removeItem('emergencyToken');
+                localStorage.removeItem('rfidToken');
                 this.props.history.push(`/`)
                 }
                 catch(error){

@@ -106,6 +106,7 @@ allergys.post('/login', (req, res) => {
 // Postcondition: returns Allergies of bandID provided
 allergys.post('/list', (req,res) => {
     Allergy.findAll({
+        attributes: ['allergyID'],
         where: {
             bandID: req.body.bandID
         }

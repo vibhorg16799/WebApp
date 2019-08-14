@@ -120,6 +120,7 @@ medicalconditions.post('/id', (req,res) => {
 // Postcondition: returns Allergies of bandID provided
 medicalconditions.post('/list', (req,res) => {
     MedicalCondition.findAll({
+        attributes: ['conditionID'],
         where: {
             bandID: req.body.bandID
         }

@@ -92,6 +92,26 @@ diseasenames.post('/id', (req,res) => {
     })
 })
 
+diseasenames.post('/list', (req,res) => {
+    DiseaseName.findAll({
+        attributes: ['diseaseName'],
+        where: {
+            diseaseID: [req.body.diseaseID1, req.body.diseaseID2, req.body.diseaseID3, req.body.diseaseID4]
+        }
+    })
+    .then((disease) => {
+        if(disease){
+        res.send(disease);
+        }
+        else{
+            res.status(400).json({error: 'disease Name does not exist'}); // record not found 
+        }
+    })
+    .catch(err =>{
+        console.log("Error: " + err);
+    })
+})
+
 
 
 

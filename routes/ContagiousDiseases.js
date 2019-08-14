@@ -105,6 +105,7 @@ contagiousdiseases.post('/login', (req, res) => {
 // Postcondition: returns Allergies of bandID provided
 contagiousdiseases.post('/list', (req,res) => {
     ContagiousDisease.findAll({
+        attributes: ['diseaseID'],
         where: {
             bandID: req.body.bandID
         }

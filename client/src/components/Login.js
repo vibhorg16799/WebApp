@@ -1,7 +1,7 @@
 // This file contains the view and functionality for the Login page 
 
 import React, { Component } from 'react'; // imports react 
-import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool, loginNurse, loginPediatrician, loginEmergencyInfo, loginBloodChart, loginRFID, loginMedicalCondition} from './UserFunctions' // imports functions from UserFunctions
+import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool, loginNurse, loginPediatrician, loginEmergencyInfo, loginBloodChart, loginRFID, loginMedicalCondition, loginAllergen, allergenName, allergyList, conditionList, loginContagiousDisease, diseaseList} from './UserFunctions' // imports functions from UserFunctions
 import jwt_decode from 'jwt-decode'; // imports jwt decode module
 
 
@@ -66,8 +66,83 @@ class Login extends Component {
                             loginPediatrician(jwt_decode(user));
                             loginEmergencyInfo(jwt_decode(user));
                             loginBloodChart(jwt_decode(user));
-                            loginRFID(jwt_decode(user));
+                            loginRFID(jwt_decode(user)).then( res => {
+
+                            const rfidToken = localStorage.getItem('rfidToken'); // token sent from rfids/bands
+
+                            let rfidCodes = JSON.parse(rfidToken); // parses rfidCode from string to JSON
+
+                            let minCode = rfidCodes[0]; // gets the 0th RFID code from array, which is the minimum value RFID code
+
+                            console.log(rfidCodes[0]); 
+
+                            // returns list of allergens associated to bandID
+                            loginAllergen(minCode).then( res =>{
+                            
+                            const allergensExtracted = localStorage.getItem('allergyToken'); // sets allergyToken sent from loginAllergen method to const allergensExtracted
+
+                            console.log(allergensExtracted);
+
+                            let allergenID = JSON.parse(allergensExtracted); // parses text to json object
+
+                         // PREVIOUS WORKING VAR FOR ALLERGYNAME   let firstAllergen = allergenID[0];
+
+                            let allergy = {
+                                allergyID1: allergenID[0] ,
+                                allergyID2: allergenID[1],
+                                allergyID3: allergenID[2],
+                                allergyID4: allergenID[3],
+                            }
+                            console.log(allergy);
+
+                            allergyList(allergy); // gets names of allergies associated to users RFID bands
+
+                           // allergenName(allergenID); // passes allergenID json object to allergenName method
+
+                         //   history.push(`/studentprofile`);
+                        })
+                        // returns list of medical conditions associated to bandID
+                        loginMedicalCondition(minCode).then( res => {
+
+                            const conditionsExtracted = localStorage.getItem('conditionToken'); // sets medical condition token to local const
+
+                            console.log(conditionsExtracted);
+
+                            let conditionID = JSON.parse(conditionsExtracted); // parses text to json object
+
+                            // object that holds medical conditions of RFID band
+                            let condition = {
+                                conditionID1: conditionID[0],
+                                conditionID2: conditionID[1],
+                                conditionID3: conditionID[2],
+                                conditionID4: conditionID[3],
+                            }
+                            console.log(condition);
+
+                            conditionList(condition); // gets names of conditions associated to users RFID bands
+                        })
+
+                        loginContagiousDisease(minCode).then( res => {
+
+                            const diseaseExtracted = localStorage.getItem('diseaseToken') // sets disease token to local const
+
+                            console.log(diseaseExtracted);
+
+                            let diseaseID = JSON.parse(diseaseExtracted); // parses text to json object
+
+                            //object that holds diseases of RFID band
+                            let disease = {
+                                diseaseID1: diseaseID[0],
+                                diseaseID2: diseaseID[1],
+                                diseaseID3: diseaseID[2],
+                                diseaseID4: diseaseID[3],
+                            }
+                            console.log(disease);
+
+                            diseaseList(disease); // gets names of disease's associate to users RFID bands
                             history.push(`/studentprofile`);
+                        })
+                        })
                         }
                     })
                     
@@ -106,7 +181,7 @@ class Login extends Component {
                                 console.log(jwt_decode(user));
                                 loginNurse(jwt_decode(user));
                                 history.push(`/profile`);
-                                localStorage.removeItem('studentToken'); //removes student token from local storage
+                                //removes student token from local storage
                             }
                             //if user is not school, user is student, we return student attributes, temporary solution to signign out apropriate tokens
                             else{
@@ -115,9 +190,72 @@ class Login extends Component {
                                 loginPediatrician(jwt_decode(user));
                                 loginEmergencyInfo(jwt_decode(user));
                                 loginBloodChart(jwt_decode(user));
-                                loginRFID(jwt_decode(user));
-                                history.push(`/studentprofile`);
-                                localStorage.removeItem('schoolToken'); // removes school token from local storage, temporary solution to signing out appropriate tokens
+                                loginRFID(jwt_decode(user)).then( res => {
+
+                            
+                                    const rfidToken = localStorage.getItem('rfidToken'); // token sent from rfids/bands
+                                    let rfidCodes = JSON.parse(rfidToken); // parses rfidCode from string to JSON
+                                    let minCode = rfidCodes[0]; // gets the 0th RFID code from array, which is the minimum value RFID code
+                                    console.log(rfidCodes[0]); // sends min code to login allergen
+                                    loginAllergen(minCode).then( res =>{
+        
+                                    
+                                    const allergensExtracted = localStorage.getItem('allergyToken'); // sets allergyToken sent from loginAllergen method to const allergensExtracted
+                                    console.log(allergensExtracted);
+                                    let allergenID = JSON.parse(allergensExtracted); // parses text to json object
+                                 // PREVIOUS WORKING VAR FOR ALLERGYNAME   let firstAllergen = allergenID[0];
+                                    let allergy = {
+                                        allergyID1: allergenID[0] ,
+                                        allergyID2: allergenID[1],
+                                        allergyID3: allergenID[2],
+                                        allergyID4: allergenID[3],
+                                    }
+                                    console.log(allergy);
+                                    allergyList(allergy);
+                                   // allergenName(allergenID); // passes allergenID json object to allergenName method
+                                  //  history.push(`/studentprofile`);
+                                })
+                                loginMedicalCondition(minCode).then( res => {
+
+                                    const conditionsExtracted = localStorage.getItem('conditionToken'); // sets medical condition token to local const
+        
+                                    console.log(conditionsExtracted);
+        
+                                    let conditionID = JSON.parse(conditionsExtracted); // parses text to json object
+        
+                                    // object that holds medical conditions of RFID band
+                                    let condition = {
+                                        conditionID1: conditionID[0],
+                                        conditionID2: conditionID[1],
+                                        conditionID3: conditionID[2],
+                                        conditionID4: conditionID[3],
+                                    }
+                                    console.log(condition);
+        
+                                    conditionList(condition); // gets names of conditions associated to users RFID bands
+                                })
+        
+                                loginContagiousDisease(minCode).then( res => {
+        
+                                    const diseaseExtracted = localStorage.getItem('diseaseToken') // sets disease token to local const
+        
+                                    console.log(diseaseExtracted);
+        
+                                    let diseaseID = JSON.parse(diseaseExtracted); // parses text to json object
+        
+                                    //object that holds diseases of RFID band
+                                    let disease = {
+                                        diseaseID1: diseaseID[0],
+                                        diseaseID2: diseaseID[1],
+                                        diseaseID3: diseaseID[2],
+                                        diseaseID4: diseaseID[3],
+                                    }
+                                    console.log(disease);
+        
+                                    diseaseList(disease); // gets names of disease's associate to users RFID bands
+                                    history.push(`/studentprofile`);
+                                })
+                                })
                             }
                         })
                     }
@@ -130,6 +268,23 @@ class Login extends Component {
 
         }
         finally{
+
+                
+
+        /*    const rfidToken = localStorage.getItem('rfidToken')
+
+            .then(res => {
+                let rfidCodes = JSON.parse(rfidToken)
+                let minCode = (rfidCodes[0].bandID)
+                console.log(minCode);
+                loginAllergen(minCode);
+                
+            })
+            .catch(error => {
+                console.log("Error" + error);
+            })*/
+
+
             
         }
     }

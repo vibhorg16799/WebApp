@@ -79,6 +79,26 @@ allergynames.post('/login', (req, res) => {
     })
 })
 
+allergynames.post('/list', (req,res) => {
+    AllergyName.findAll({
+        attributes: ['allergyName'],
+        where: {
+            allergyID: [req.body.allergyID1, req.body.allergyID2, req.body.allergyID3, req.body.allergyID4]
+        }
+    })
+    .then((allergy) => {
+        if(allergy){
+        res.send(allergy);
+        }
+        else{
+            res.status(400).json({error: 'Allergy does not exist'}); // record not found 
+        }
+    })
+    .catch(err =>{
+        console.log("Error: " + err);
+    })
+})
+
 
 
 module.exports = allergynames;

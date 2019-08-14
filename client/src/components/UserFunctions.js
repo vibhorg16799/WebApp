@@ -491,9 +491,9 @@ export const loginMedicalCondition = band => {
         bandID: band.bandID,
     })
     .then(response => {
-        localStorage.setItem('conditionToken', response.data)
-        console.log("Medical Condition logged in " + response.data);
-        return response.data;
+        localStorage.setItem('conditionToken', JSON.stringify(response.data))
+        console.log("Medical Condition logged in " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
     })
 }
 
@@ -505,9 +505,9 @@ export const loginContagiousDisease = band => {
         bandID: band.bandID,
     })
     .then(response => {
-        localStorage.setItem('diseaseToken', response.data)
-        console.log("Contagious Disease logged in " + response.data);
-        return response.data;
+        localStorage.setItem('diseaseToken', JSON.stringify(response.data))
+        console.log("Contagious Disease logged in " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
     })
 }
 
@@ -519,9 +519,9 @@ export const loginAllergen = band => {
         bandID: band.bandID,
     })
     .then(response => {
-        localStorage.setItem('allergyToken', response.data)
-        console.log("Allergy logged in " + response.data);
-        return response.data;
+        localStorage.setItem('allergyToken', JSON.stringify(response.data))
+        console.log("Allergy logged in " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
     })
 }
 
@@ -530,12 +530,12 @@ export const loginAllergen = band => {
 export const allergenName = allergen => {
     return axios 
     .post('/allergynames/login', {
-        allergenID: allergen.allergenID,
+        allergyID: allergen[0].allergyID,
     })
     .then(response => {
         localStorage.setItem('allergyNameToken', response.data)
-        console.log("Allergy Name logged in " + response.data);
-        return response.data;
+        console.log("Allergy Name logged in " + (response.data));
+        return (response.data);
     })
 }
 
@@ -566,6 +566,218 @@ export const conditionName = condition => {
         return response.data;
     })
 }
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const allergyList = allergy => {
+    if(allergy.allergyID4 !== undefined){
+    return axios
+    
+    .post('/allergynames/list', {
+        allergyID1: allergy.allergyID1.allergyID,
+        allergyID2: allergy.allergyID2.allergyID, 
+        allergyID3: allergy.allergyID3.allergyID, 
+        allergyID4: allergy.allergyID4.allergyID
+    })
+    .then(response => {
+        localStorage.setItem('allergyNameList', JSON.stringify(response.data))
+        console.log("Allergy Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+}else if(allergy.allergyID3 !== undefined){
+    return axios
+    
+    .post('/allergynames/list', {
+        allergyID1: allergy.allergyID1.allergyID,
+        allergyID2: allergy.allergyID2.allergyID, 
+        allergyID3: allergy.allergyID3.allergyID, 
+    })
+    .then(response => {
+        localStorage.setItem('allergyNameList', JSON.stringify(response.data))
+        console.log("Allergy Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+}else if(allergy.allergyID2 !== undefined){
+    return axios
+    
+    .post('/allergynames/list', {
+        allergyID1: allergy.allergyID1.allergyID,
+        allergyID2: allergy.allergyID2.allergyID, 
+    })
+    .then(response => {
+        localStorage.setItem('allergyNameList', JSON.stringify(response.data))
+        console.log("Allergy Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+}else if(allergy.allergyID1 !== undefined){
+    return axios
+    
+    .post('/allergynames/list', {
+        allergyID1: allergy.allergyID1.allergyID,
+    })
+    .then(response => {
+        localStorage.setItem('allergyNameList', JSON.stringify(response.data))
+        console.log("Allergy Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+}else{
+    return axios
+    
+    .post('/allergynames/list', {
+        allergyID1: ' ',
+    })
+    .then(response => {
+        localStorage.setItem('allergyNameList', JSON.stringify(response.data))
+        console.log("Allergy Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+}
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const conditionList = condition => {
+    if(condition.conditionID4 !== undefined){
+    return axios
+    
+    .post('/conditionnames/list', {
+        conditionID1: condition.conditionID1.conditionID,
+        conditionID2: condition.conditionID2.conditionID, 
+        conditionID3: condition.conditionID3.conditionID, 
+        conditionID4: condition.conditionID4.conditionID
+    })
+    .then(response => {
+        localStorage.setItem('conditionNameList', JSON.stringify(response.data))
+        console.log("Condition Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+}else if(condition.conditionID3 !== undefined){
+    return axios
+    
+    .post('/conditionnames/list', {
+        conditionID1: condition.conditionID1.conditionID,
+        conditionID2: condition.conditionID2.conditionID, 
+        conditionID3: condition.conditionID3.conditionID,
+    })
+    .then(response => {
+        localStorage.setItem('conditionNameList', JSON.stringify(response.data))
+        console.log("Condition Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+}else if(condition.conditionID2 !== undefined){
+    return axios
+    
+    .post('/conditionnames/list', {
+        conditionID1: condition.conditionID1.conditionID,
+        conditionID2: condition.conditionID2.conditionID, 
+    })
+    .then(response => {
+        localStorage.setItem('conditionNameList', JSON.stringify(response.data))
+        console.log("Condition Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+}else if(condition.conditionID1 !== undefined){
+    return axios
+    
+    .post('/conditionnames/list', {
+        conditionID1: condition.conditionID1.conditionID,
+    })
+    .then(response => {
+        localStorage.setItem('conditionNameList', JSON.stringify(response.data))
+        console.log("Condition Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+}
+else{
+    return axios
+    
+    .post('/conditionnames/list', {
+        conditionID1: ' ',
+    })
+    .then(response => {
+        localStorage.setItem('conditionNameList', JSON.stringify(response.data))
+        console.log("Condition Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+}
+}
+
+// Precondition: user object contains bandID value
+// Postcondition: returns boolean variable that tells if user is school
+export const diseaseList = disease => {
+    if(disease.diseaseID4 !== undefined){
+    return axios
+    
+    .post('/diseasenames/list', {
+        diseaseID1: disease.diseaseID1.diseaseID,
+        diseaseID2: disease.diseaseID2.diseaseID, 
+        diseaseID3: disease.diseaseID3.diseaseID, 
+        diseaseID4: disease.diseaseID4.diseaseID
+    })
+    .then(response => {
+        localStorage.setItem('diseaseNameList', JSON.stringify(response.data))
+        console.log("Disease Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+}else if(disease.diseaseID3 !== undefined){
+    return axios
+    
+    .post('/diseasenames/list', {
+        diseaseID1: disease.diseaseID1.diseaseID,
+        diseaseID2: disease.diseaseID2.diseaseID, 
+        diseaseID3: disease.diseaseID3.diseaseID,
+    })
+    .then(response => {
+        localStorage.setItem('diseaseNameList', JSON.stringify(response.data))
+        console.log("Disease Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+}else if(disease.diseaseID2 !== undefined){
+    return axios
+    
+    .post('/diseasenames/list', {
+        diseaseID1: disease.diseaseID1.diseaseID,
+        diseaseID2: disease.diseaseID2.diseaseID, 
+    })
+    .then(response => {
+        localStorage.setItem('diseaseNameList', JSON.stringify(response.data))
+        console.log("Disease Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+}else if(disease.diseaseID1 !== undefined){
+    return axios
+    
+    .post('/diseasenames/list', {
+        diseaseID1: disease.diseaseID1.diseaseID,
+    })
+    .then(response => {
+        localStorage.setItem('diseaseNameList', JSON.stringify(response.data))
+        console.log("Disease Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+}else{
+    return axios
+    
+    .post('/diseasenames/list', {
+        diseaseID1: ' ',
+    })
+    .then(response => {
+        localStorage.setItem('diseaseNameList', JSON.stringify(response.data))
+        console.log("Disease Name List Logged In " + JSON.stringify(response.data));
+        return JSON.stringify(response.data);
+    })
+
+
+}
+}
+
 
 
 

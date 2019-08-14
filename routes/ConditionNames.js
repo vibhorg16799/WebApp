@@ -92,6 +92,26 @@ conditionnames.post('/id', (req,res) => {
     })
 })
 
+conditionnames.post('/list', (req,res) => {
+    ConditionName.findAll({
+        attributes: ['conditionName'],
+        where: {
+            conditionID: [req.body.conditionID1, req.body.conditionID2, req.body.conditionID3, req.body.conditionID4]
+        }
+    })
+    .then((condition) => {
+        if(condition){
+        res.send(condition);
+        }
+        else{
+            res.status(400).json({error: 'Condition Name does not exist'}); // record not found 
+        }
+    })
+    .catch(err =>{
+        console.log("Error: " + err);
+    })
+})
+
 
 
 module.exports = conditionnames;
