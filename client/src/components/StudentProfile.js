@@ -29,7 +29,7 @@ class Profile extends Component {
 
     //Precondition: page loaded correctly
     //Postcondition: state is set and page is reloaded 
-    componentDidMount() {
+    componentDidMount() { 
 
         try{
 
