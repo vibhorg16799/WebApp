@@ -1,7 +1,7 @@
 // This file contains the view and functionality for the Login page 
 
 import React, { Component } from 'react'; // imports react 
-import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool, loginNurse, loginPediatrician, loginEmergencyInfo, loginBloodChart, loginRFID, loginMedicalCondition, loginAllergen, allergenName, allergyList, conditionList, loginContagiousDisease, diseaseList} from './UserFunctions' // imports functions from UserFunctions
+import {login, registerScan, getUserID, getLogInInfo, loginScan, loginSchool, loginStudent, isSchool, loginNurse, loginPediatrician, loginEmergencyInfo, loginBloodChart, loginRFID, loginMedicalCondition, loginAllergen,allergyList, conditionList, loginContagiousDisease, diseaseList} from './UserFunctions' // imports functions from UserFunctions
 import jwt_decode from 'jwt-decode'; // imports jwt decode module
 
 
@@ -51,19 +51,27 @@ class Login extends Component {
                 //    loginSchool(jwt_decode(user)).then(user => {
                         var userDecoded = (jwt_decode(user));
                         isSchool(userDecoded).then(isSchool => {
-
                         // if user is school we return all school attributes 
                         if(isSchool){
+                            try{
                             loginSchool(jwt_decode(user));
                             console.log(jwt_decode(user));
                             loginNurse(jwt_decode(user));
-                            history.push(`/profile`); 
+                            
+                            }
+                            catch(error){
+                                console.log(error);
+                            }
+                            finally{
+                                history.push(`/profile`); 
+                            }
                         }
                         // if user is not school, user is student, we return student attributes
                         else{
+                            try{
                             loginStudent(jwt_decode(user));
                             console.log(jwt_decode(user));
-                            loginPediatrician(jwt_decode(user));
+                          //  loginPediatrician(jwt_decode(user)); Arent returning pediatrician data yet 
                             loginEmergencyInfo(jwt_decode(user));
                             loginBloodChart(jwt_decode(user));
                             loginRFID(jwt_decode(user)).then( res => {
@@ -140,9 +148,20 @@ class Login extends Component {
                             console.log(disease);
 
                             diseaseList(disease); // gets names of disease's associate to users RFID bands
-                            history.push(`/studentprofile`);
+                            
                         })
                         })
+                    }
+                    catch(error){
+                        console.log(error);
+                    }
+                    finally{
+                        
+                        this.forceUpdate();
+                        history.push(`/studentprofile`);
+                    }
+                        
+                        
                         }
                     })
                     
@@ -263,28 +282,14 @@ class Login extends Component {
             })
             })
         }
-        catch{console.error(); // error handling 
-        
+        catch(error){
+            
+            console.log(error); // error handling 
 
         }
         finally{
 
-                
-
-        /*    const rfidToken = localStorage.getItem('rfidToken')
-
-            .then(res => {
-                let rfidCodes = JSON.parse(rfidToken)
-                let minCode = (rfidCodes[0].bandID)
-                console.log(minCode);
-                loginAllergen(minCode);
-                
-            })
-            .catch(error => {
-                console.log("Error" + error);
-            })*/
-
-
+                this.forceUpdate()
             
         }
     }

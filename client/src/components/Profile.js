@@ -12,6 +12,8 @@ class Profile extends Component {
             address: '',
             name: '',
             phoneNumber: '',
+            nursePhone: '',
+            nurseRoom: '',
         }
  
     }
@@ -22,13 +24,22 @@ class Profile extends Component {
 
         try{
         
-        const token = localStorage.usertoken // token sent from users/login route
+        // JWT tokens sent from express API 
+        const token = localStorage.getItem('usertoken'); // token sent from users/login route
  
-        const decoded = jwt_decode(token) // decodes user response token 
- 
-        const schoolToken = localStorage.schoolToken //token sent from schools/login route
+        const nurseToken = localStorage.getItem('nurseToken'); // gets token sent from nurses/login route
 
-        const schoolDecoded = jwt_decode(schoolToken) // decodes schools/login token
+        const schoolToken = localStorage.getItem('schoolToken'); //token sent from schools/login route
+
+
+        // Decoding of JWT tokens containing user Data
+        const decoded = jwt_decode(token); // decodes user response token 
+ 
+
+        const schoolDecoded = jwt_decode(schoolToken); // decodes schools/login token
+
+
+        const nurseDecoded = jwt_decode(nurseToken);
 
 
         this.setState({ // sets state to decoded user and school token contents 
@@ -36,7 +47,9 @@ class Profile extends Component {
             email: decoded.email,
             address: decoded.address,
             name: schoolDecoded.name,
-            phoneNumber: schoolDecoded.phoneNumber
+            phoneNumber: schoolDecoded.phoneNumber,
+            nursePhone: nurseDecoded.phoneNumber,
+            nurseRoom: nurseDecoded.roomNumber,
         })
         
     }
@@ -44,8 +57,9 @@ class Profile extends Component {
         console.log("error:" + error);
     }
         finally{
-            this.forceUpdate()
-            console.log(this.state.email)
+            this.setState({});
+            this.forceUpdate();
+            //updates and refreshses web page  
         }
 
     }
@@ -78,6 +92,14 @@ class Profile extends Component {
                         <tr>
                             <td>Phone Number</td>
                             <td>{this.state.phoneNumber}</td> 
+                        </tr>
+                        <tr>
+                            <td>Nurse's Phone Number</td>
+                            <td>{this.state.nursePhone}</td> 
+                        </tr>
+                        <tr>
+                            <td>Nurse's Room Number</td>
+                            <td>{this.state.nurseRoom}</td> 
                         </tr>
                     </tbody>
                 </table>

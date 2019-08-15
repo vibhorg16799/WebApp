@@ -1,7 +1,7 @@
 // This file contains the view and functionality for the StudentRegister 2 page 
 
 import React, { Component } from 'react'; // imports react 
-import {registerEmergencyContact, registerBloodChart, registerMedicalCondition, registerContagiousDisease, registerAllergy, register} from './UserFunctions' // imports registerPediatrician function
+import {registerEmergencyContact, registerBloodChart, registerMedicalCondition, registerContagiousDisease, registerAllergy,} from './UserFunctions' // imports registerPediatrician function
 import FilteredMultiSelect from 'react-filtered-multiselect' // imports multifiltered select input
 import 'bootstrap/dist/css/bootstrap.min.css' // imports bootstrap
 
@@ -134,11 +134,6 @@ class StudentRegister2 extends Component {
         const contagiousDisease = {
             bandID: this.state.bandID,
             diseaseID: this.state.conditionID,
-        }
-
-         // allergy object holds data needed to register allergies for student 
-        const allergy = {
-            allergyID: this.state.conditionID,
         }
 
         // Sends userEmergency object to registerEmergencyInfo method, then push's user to login page

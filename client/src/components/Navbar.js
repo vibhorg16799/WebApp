@@ -13,7 +13,7 @@ class Navbar extends Component {
     logOut(e) {
         e.preventDefault()
 
-        console.log(jwt_decode(localStorage.usertoken)) //logs decoded user data 
+      //  console.log(jwt_decode(localStorage.usertoken)) //logs decoded user data 
 
         var userDecoded = (jwt_decode(localStorage.usertoken)); // holds user table data 
         isSchool(userDecoded).then(isSchool => {
