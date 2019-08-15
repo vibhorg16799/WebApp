@@ -121,19 +121,19 @@ class Profile extends Component {
              this.setState({bloodType: bloodTypesList[2]})
          }
          else if(bloodDecoded.bloodType === 4){
-             this.setState({blodType: bloodTypesList[3]})
+             this.setState({bloodType: bloodTypesList[3]})
          }
          else if(bloodDecoded.bloodType === 5){
-             this.setState({blodType: bloodTypesList[4]})
+             this.setState({bloodType: bloodTypesList[4]})
          }
          else if(bloodDecoded.bloodType === 6){
-             this.setState({blodType: bloodTypesList[5]})
+             this.setState({bloodType: bloodTypesList[5]})
          }
          else if(bloodDecoded.bloodType === 7){
-             this.setState({blodType: bloodTypesList[6]})
+             this.setState({bloodType: bloodTypesList[6]})
          }
          else{
-             this.setState({blodType: bloodTypesList[7]})
+             this.setState({bloodType: bloodTypesList[7]})
          }
 
          this.forceUpdate()
